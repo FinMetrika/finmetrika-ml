@@ -1,4 +1,4 @@
 """Customized machine learning for practical projects.
 """
 
-__version__ = "0.1.0"
+#from finmetrika_ml import txt_classification

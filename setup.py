@@ -12,4 +12,10 @@ setup(
     #install_requires=[
     #    "pytorch>=2.0.1"
     #]
+    classifiers=[
+        "Development status :: 2 - Pre-Alpha",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11"
+    ]
 )
