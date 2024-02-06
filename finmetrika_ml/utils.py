@@ -39,11 +39,11 @@ def get_package_version(package_name):
         return "Not Installed"
 
 
-def check_device(FLAGS):
+def check_device(verbose:bool):
     """Check which compute device is available on the machine.
 
     Args:
-        FLAGS (dataclass): project specific arguments
+        verbose (bool): verbose argument - prints all
 
     Returns:
         str: string name of the compute device available
@@ -56,7 +56,7 @@ def check_device(FLAGS):
     else:
         device = "cpu"
     
-    if FLAGS.verbose: 
+    if verbose: 
         print(f'Using {device} device!')
 
     return device
