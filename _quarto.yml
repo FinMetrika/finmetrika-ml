@@ -26,6 +26,7 @@ format:
     highlight-style: github
     #code-line-numbers: true
     toc-depth: 4
+    css: styles.css
   pdf:
     documentclass: report
     papersize: A4
@@ -41,6 +42,7 @@ format:
     fontfamily: libertinus
     colorlinks: true
   
-
+execute: 
+  freeze: auto
 title-block-banner: false
 title-block-style: default
