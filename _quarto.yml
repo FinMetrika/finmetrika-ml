@@ -2,14 +2,15 @@ project:
   type: book
 
 book:
-  title: "finmetrika-ml: Machine learning library for practical projects"
+  title: "Machine learning for practical projects"
   author: "Ita cirovic Donev (FinMetrika d.o.o.)"
   date: "February 2024"
+  page-navigation: true
   chapters:
     - index.qmd
     #- docs/00_intro.qmd
-    #- docs/01_data_processing.ipynb
-    #- docs/30_utils.ipynb
+    - docs/00_data_processing.ipynb
+    - docs/30_utils.ipynb
     #- references.qmd
 
 #bibliography: references.bib
@@ -20,6 +21,8 @@ format:
     code-fold: false
     code-summary: "show code"
     code-overflow: wrap
+    code-copy: true
+    #code-line-numbers: true
     highlight-style: github
     #code-line-numbers: true
     toc-depth: 4
