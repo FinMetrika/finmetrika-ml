@@ -1,0 +1,46 @@
+project:
+  type: book
+
+book:
+  title: "Machine learning for practical projects"
+  author: "Ita cirovic Donev (FinMetrika d.o.o.)"
+  date: "February 2024"
+  page-navigation: true
+  chapters:
+    - index.qmd
+    #- docs/00_intro.qmd
+    - docs/00_data_processing.ipynb
+    - docs/30_utils.ipynb
+    #- references.qmd
+
+#bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-fold: false
+    code-summary: "show code"
+    code-overflow: wrap
+    code-copy: true
+    #code-line-numbers: true
+    highlight-style: github
+    #code-line-numbers: true
+    toc-depth: 4
+  pdf:
+    documentclass: report
+    papersize: A4
+    #lof: true
+    #lot: true
+    geometry:
+      - top=10mm
+      - left=10mm
+      - right=30mm
+      - bottom=15mm
+      - heightrounded
+    highlight-style: github
+    fontfamily: libertinus
+    colorlinks: true
+  
+
+title-block-banner: false
+title-block-style: default

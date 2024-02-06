@@ -1,0 +1,20 @@
+# Introduction 
+The `finmetrika-ml` library is a machine learning library for practical projects, predominantly for the financial industry. 
+
+The library is organized as follows:
+```bash
+finmetrika_ml
+├── data
+    ├── processing.py
+    └── vizualization.py
+├── model
+    ├── training.py
+    ├── evaluation.py
+    └── metrics.py
+└── utils.py
+```
+
+To install use the `pip` command in your virtual environment:
+```bash
+pip install finmetrika_ml
+```

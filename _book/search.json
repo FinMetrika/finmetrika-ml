@@ -1,0 +1,22 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Machine learning for practical projects",
+    "section": "",
+    "text": "1 Introduction\nThe finmetrika-ml library is a machine learning library for practical projects, predominantly for the financial industry.\nThe library is organized as follows:\nfinmetrika_ml\n├── data\n    ├── processing.py\n    └── vizualization.py\n├── model\n    ├── training.py\n    ├── evaluation.py\n    └── metrics.py\n└── utils.py\nTo install use the pip command in your virtual environment:\npip install finmetrika_ml",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "docs/30_utils.html",
+    "href": "docs/30_utils.html",
+    "title": "3  Utility functions - utils",
+    "section": "",
+    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\n\ncheck_device()\n\nCheck which compute device is available on the machine.\nArgs:\nverbose (bool): verbose argument - prints all\n\n\nset_all_seeds()\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps\nArgs:\nseed (int): Positive integer value.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Utility functions - `utils`</span>"
+    ]
+  }
+]
