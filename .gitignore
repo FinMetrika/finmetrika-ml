@@ -161,3 +161,4 @@ cython_debug/
 .pypirc
 
 /.quarto/
+/_site/
