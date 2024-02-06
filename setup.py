@@ -8,7 +8,7 @@ setup(
     packages=find_packages(include=["finmetrika-ml", 
                                     "finmetrika.*"], # include all subpmodules
                            ),
-    python_requires=">=3.9"
+    python_requires=">=3.9",
     install_requires=[
         "pytorch>=2.2.0"
     ]
