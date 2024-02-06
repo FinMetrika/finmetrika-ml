@@ -11,3 +11,6 @@ test: ## run tests quickly with the default Python
 
 release: ## package and upload release
 	twine upload dist/*
+
+release-test: ## package and upload release on test PyPI
+	twine upload --repository testpypi dist/*

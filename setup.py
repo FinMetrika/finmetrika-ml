@@ -4,7 +4,7 @@ setup(
     author="Ita Cirovic Donev",
     description="Customized machine learning package for practical projects.",
     name="finmetrika-ml",
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(include=["finmetrika_ml", 
                                     "finmetrika.*"], # include all subpmodules
                            ),
@@ -13,9 +13,10 @@ setup(
     #    "pytorch>=2.0.1"
     #]
     classifiers=[
-        "Development status :: 2 - Pre-Alpha",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11"
+        "Development Status :: 1 - Planning",
+        "Intended Audience :: Financial and Insurance Industry",
+        "Natural Language :: English",
+        "Operating System :: MacOS",
+        "Programming Language :: Python :: 3",
     ]
 )
