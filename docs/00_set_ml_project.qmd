@@ -1,0 +1,41 @@
+---
+title: Setting up the machine learning project
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+```
+
+Any data analysis and machine learning project requires lots of data exploration and experimentation with different model types along with different model arguments. Things can get pretty messy fast. To make life a bit easier it is best to organize at the start of the project by creating a new repository localy and/or in the cloud. This will ensure version control of your project.
+
+Inevitably, there will be many arguments that we will need to use in the course of our experimentation. Best is to store them in the `config.py` file either as `ArgParse` or `dataclass` objects. Here is an example:
+
+```python
+from dataclasses import dataclass, asdict, field
+from pathlib import Path
+
+
+# Get the absolute path to the directory where config.py is located
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+@dataclass
+class ProjectConfig:
+    # Documenting experiments
+    experiment_version: str = field(
+        default="v0",
+        metadata={'description': "Name of the training experiment"})
+    
+    experiment_description: str = field(
+        default="This is test run",
+        metadata={'description': "Describe the experiment in couple of sentences"})
+ 
+```
+

@@ -5,7 +5,7 @@ The library is organized as follows:
 ```bash
 finmetrika_ml
 ├── data
-    ├── processing.py
+    ├── data_processing.py
     └── vizualization.py
 ├── model
     ├── training.py

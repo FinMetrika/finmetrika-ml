@@ -8,8 +8,9 @@ book:
   page-navigation: true
   chapters:
     - index.qmd
-    #- docs/00_intro.qmd
-    #- docs/00_data_processing.ipynb
+    - docs/00_set_ml_project.qmd
+    - docs/data/01_data.qmd
+    - docs/data/02_data_processing.qmd
     #- docs/30_utils.ipynb
     - docs/30_utils.qmd
     #- references.qmd
@@ -24,7 +25,7 @@ format:
     code-overflow: wrap
     code-copy: true
     #code-line-numbers: true
-    highlight-style: github
+    highlight-style: breeze
     #code-line-numbers: true
     toc-depth: 4
     css: styles.css

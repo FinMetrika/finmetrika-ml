@@ -19,4 +19,4 @@ render: ## render quarto documentation
 	quarto render
 
 publish: ## publish quarto documentation to github
-	quarto publish gh-pages
+	quarto publish gh-pages --no-browser

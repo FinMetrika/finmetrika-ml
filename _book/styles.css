@@ -7,7 +7,7 @@ code {
 /*Style quotations - block*/
 blockquote {
   background: #fafafa;
-  border-left: 4px solid #8A8C3B; /* Adds a left border */
+  border-left: 4px solid #5D8A66; /* Adds a left border */
   padding-left: 20px; /* Adds padding to the left */
   margin-left: 0; /* Adjusts the left margin */
   margin-right: 0; /* Adjusts the right margin */
@@ -16,17 +16,29 @@ blockquote {
 /*Style quotations - inside block*/
 blockquote p {
   display: inline;
-  color: #A8A947; /* Sets the text color */
+  color: #5D8A66; /* Sets the text color */
   font-style: normal; /* Makes the text italic */
   font-family: 'Courier New', Courier;
   font-weight: bold;
 }
 
 /* Code output code text*/
-.cell-output-stdout code {
+/* .cell-output-stdout code {
   color: #6073A6;
-  /*font-family: 'Courier New', Courier, monospace;*/
+  /*font-family: 'Courier New', Courier, monospace;
   
+} */
+
+.cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
+  margin-left: 0.8rem;
+  margin-top: 0;
+  background: none;
+  /* border-style: dotted; */
+  border-width: 2px;
+  /* border-color: antiquewhite; */
+  border-left: 2px dotted lightsalmon;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /* Code output cell*/
@@ -34,8 +46,13 @@ blockquote p {
   background-color: #fafafa;
 }*/
 
-
-small, .small {
-  font-size: 17px;
-  /* background: #f4f5f9; */
+.table {
+  font-size: 16px;
+  /* disable striped tables */
+  --bs-table-striped-bg: var(--bs-table-bg);
 }
+
+/* small, .small {
+  font-size: 17px;
+  /* background: #f4f5f9; 
+} */

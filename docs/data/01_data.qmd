@@ -1,0 +1,20 @@
+---
+title: Data
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+```
+
+Data module consists of:  
+-   `data_read.py`: loading the local txt or csv files  
+-   `create_datasets`: creating HuggingFace datasets from local files  
+-
