@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 3&nbsp; Utility functions - utils</title>
+<title>Machine learning for practical projects - 2&nbsp; utils</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../docs/00_data_processing.html" rel="prev">
+<link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +103,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -80,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Utility functions - <code>utils</code></span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -113,14 +148,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docs/00_data_processing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Processing</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../docs/30_utils.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Utility functions - <code>utils</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></span></a>
   </div>
 </li>
     </ul>
@@ -133,8 +162,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#check_device" id="toc-check_device" class="nav-link active" data-scroll-target="#check_device"><code>check_device()</code></a></li>
-  <li><a href="#set_all_seeds" id="toc-set_all_seeds" class="nav-link" data-scroll-target="#set_all_seeds"><code>set_all_seeds()</code></a></li>
+  <li><a href="#set_all_seeds" id="toc-set_all_seeds" class="nav-link active" data-scroll-target="#set_all_seeds"><code>set_all_seeds</code></a></li>
+  <li><a href="#check_device" id="toc-check_device" class="nav-link" data-scroll-target="#check_device"><code>check_device</code></a></li>
   </ul>
 </nav>
     </div>
@@ -143,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Utility functions - <code>utils</code></span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></h1>
 </div>
 
 
@@ -161,22 +190,90 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.</p>
-<section id="check_device" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="check_device"><code>check_device()</code></h3>
-<hr>
+<p>Reproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.</p>
+<div id="830ee8fa" class="cell" data-execution_count="3">
+<section id="set_all_seeds" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="set_all_seeds"><code>set_all_seeds</code></h3>
+<blockquote class="blockquote">
+<p>set_all_seeds(seed: int)</p>
+</blockquote>
+<p><em>Set the seed for all packages: python, numpy, torch, torch.cuda, and mps.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>seed</strong></td>
+<td>int</td>
+<td>None</td>
+<td>Description not available</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<p>We can set the seed for most of the libraries that we use in machine learning like: <code>numpy</code>, <code>torch</code>, <code>torch.cuda</code>, <code>mps</code> as well as for Python in general.</p>
+<div id="27956206" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you are using <code>FLAGS</code> then simply replace the value of the seed for the dataclasss defined for the reproducibility. For example, if my dataclass is called <code>seed</code> then I would use:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span>FLAGS.seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="675bac5d" class="cell" data-execution_count="5">
+<section id="check_device" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="check_device"><code>check_device</code></h3>
+<blockquote class="blockquote">
+<p>check_device(verbose: bool)</p>
+</blockquote>
 <p><em>Check which compute device is available on the machine.</em></p>
-<p>Args:<br>
-<strong>verbose</strong> (bool): verbose argument - prints all</p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>verbose</strong></td>
+<td>bool</td>
+<td>True</td>
+<td>Description not available</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="set_all_seeds" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="set_all_seeds"><code>set_all_seeds()</code></h3>
-<hr>
-<p><em>Set the seed for all packages: python, numpy, torch, torch.cuda, and mps</em></p>
-<p>Args:<br>
-<strong>seed</strong> (int): Positive integer value.</p>
+</div>
+<p>We can use the function as follows, which if the argument <code>verbose</code> is <code>True</code> it will print out the compute device currently available.</p>
+<div id="2f8830d9" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> check_device()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using mps device!</code></pre>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -568,8 +665,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../docs/00_data_processing.html" class="pagination-link  aria-label=" &lt;span="" processing&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Processing</span></span>
+      <a href="../index.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

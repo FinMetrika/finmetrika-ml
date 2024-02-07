@@ -12,11 +12,11 @@
   {
     "objectID": "docs/30_utils.html",
     "href": "docs/30_utils.html",
-    "title": "3  Utility functions - utils",
+    "title": "2  utils",
     "section": "",
-    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\n\ncheck_device()\n\nCheck which compute device is available on the machine.\nArgs:\nverbose (bool): verbose argument - prints all\n\n\nset_all_seeds()\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps\nArgs:\nseed (int): Positive integer value.",
+    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\nReproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.\n\n\nset_all_seeds\n\nset_all_seeds(seed: int)\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nseed\nint\nNone\nDescription not available\n\n\n\n\n\nWe can set the seed for most of the libraries that we use in machine learning like: numpy, torch, torch.cuda, mps as well as for Python in general.\n\nset_all_seeds(seed=42)\n\nIf you are using FLAGS then simply replace the value of the seed for the dataclasss defined for the reproducibility. For example, if my dataclass is called seed then I would use:\nset_all_seeds(seed=FLAGS.seed)\n\n\ncheck_device\n\ncheck_device(verbose: bool)\n\nCheck which compute device is available on the machine.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nverbose\nbool\nTrue\nDescription not available\n\n\n\n\n\nWe can use the function as follows, which if the argument verbose is True it will print out the compute device currently available.\n\ndevice = check_device()\n\nUsing mps device!",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Utility functions - `utils`</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>utils</span>"
     ]
   }
 ]
