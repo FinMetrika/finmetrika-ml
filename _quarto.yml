@@ -9,8 +9,9 @@ book:
   chapters:
     - index.qmd
     #- docs/00_intro.qmd
-    - docs/00_data_processing.ipynb
-    - docs/30_utils.ipynb
+    #- docs/00_data_processing.ipynb
+    #- docs/30_utils.ipynb
+    - docs/30_utils.qmd
     #- references.qmd
 
 #bibliography: references.bib
@@ -42,7 +43,7 @@ format:
     fontfamily: libertinus
     colorlinks: true
   
-execute: 
-  freeze: auto
+#execute: 
+#  freeze: auto
 title-block-banner: false
 title-block-style: default
