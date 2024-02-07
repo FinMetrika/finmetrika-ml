@@ -4,19 +4,39 @@
     "href": "index.html",
     "title": "Machine learning for practical projects",
     "section": "",
-    "text": "1 Introduction\nThe finmetrika-ml library is a machine learning library for practical projects, predominantly for the financial industry.\nThe library is organized as follows:\nfinmetrika_ml\n├── data\n    ├── processing.py\n    └── vizualization.py\n├── model\n    ├── training.py\n    ├── evaluation.py\n    └── metrics.py\n└── utils.py\nTo install use the pip command in your virtual environment:\npip install finmetrika_ml",
+    "text": "1 Introduction\nThe finmetrika-ml library is a machine learning library for practical projects, predominantly for the financial industry.\nThe library is organized as follows:\nfinmetrika_ml\n├── data\n    ├── data_processing.py\n    └── vizualization.py\n├── model\n    ├── training.py\n    ├── evaluation.py\n    └── metrics.py\n└── utils.py\nTo install use the pip command in your virtual environment:\npip install finmetrika_ml",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
+    "objectID": "docs/00_set_ml_project.html",
+    "href": "docs/00_set_ml_project.html",
+    "title": "2  Setting up the machine learning project",
+    "section": "",
+    "text": "Any data analysis and machine learning project requires lots of data exploration and experimentation with different model types along with different model arguments. Things can get pretty messy fast. To make life a bit easier it is best to organize at the start of the project by creating a new repository localy and/or in the cloud. This will ensure version control of your project.\nInevitably, there will be many arguments that we will need to use in the course of our experimentation. Best is to store them in the config.py file either as ArgParse or dataclass objects. Here is an example:\nfrom dataclasses import dataclass, asdict, field\nfrom pathlib import Path\n\n\n# Get the absolute path to the directory where config.py is located\nBASE_DIR = Path(__file__).resolve().parent.parent\n\n@dataclass\nclass ProjectConfig:\n    # Documenting experiments\n    experiment_version: str = field(\n        default=\"v0\",\n        metadata={'description': \"Name of the training experiment\"})\n    \n    experiment_description: str = field(\n        default=\"This is test run\",\n        metadata={'description': \"Describe the experiment in couple of sentences\"})",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setting up the machine learning project</span>"
+    ]
+  },
+  {
+    "objectID": "docs/data/01_data.html",
+    "href": "docs/data/01_data.html",
+    "title": "3  Data",
+    "section": "",
+    "text": "Data module consists of:\n- data_read.py: loading the local txt or csv files\n- create_datasets: creating HuggingFace datasets from local files\n-",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
     "objectID": "docs/30_utils.html",
     "href": "docs/30_utils.html",
-    "title": "2  utils",
+    "title": "5  utils",
     "section": "",
-    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\nReproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.\n\n\nset_all_seeds\n\nset_all_seeds(seed: int)\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nseed\nint\nNone\nDescription not available\n\n\n\n\n\nWe can set the seed for most of the libraries that we use in machine learning like: numpy, torch, torch.cuda, mps as well as for Python in general.\n\nset_all_seeds(seed=42)\n\nIf you are using FLAGS then simply replace the value of the seed for the dataclasss defined for the reproducibility. For example, if my dataclass is called seed then I would use:\nset_all_seeds(seed=FLAGS.seed)\n\n\ncheck_device\n\ncheck_device(verbose: bool)\n\nCheck which compute device is available on the machine.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nverbose\nbool\nTrue\nDescription not available\n\n\n\n\n\nWe can use the function as follows, which if the argument verbose is True it will print out the compute device currently available.\n\ndevice = check_device()\n\nUsing mps device!",
+    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\nReproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.\n\n\nset_all_seeds\n\nset_all_seeds(seed: int)\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nseed\nint\nNone\nDescription not available\n\n\n\n\n\nWe can set the seed for most of the libraries that we use in machine learning like: numpy, torch, torch.cuda, mps as well as for Python in general.\n\nset_all_seeds(seed=42)\n\nIf you are using FLAGS then simply replace the value of the seed for the data class defined for the reproducibility. For example, if my data class is called seed then I would use:\nset_all_seeds(seed=FLAGS.seed)\n\n\ncheck_device\n\ncheck_device(verbose: bool)\n\nCheck which compute device is available on the machine.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nverbose\nbool\nTrue\nDescription not available\n\n\n\n\n\nWe can use the function as follows, which if the argument verbose is True it will print out the compute device currently available.\n\ndevice = check_device()\n\nUsing mps device!\n\n\n\nCreating experiment information document",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>utils</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>utils</span>"
     ]
   }
 ]
