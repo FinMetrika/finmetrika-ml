@@ -21,3 +21,21 @@ blockquote p {
   font-family: 'Courier New', Courier;
   font-weight: bold;
 }
+
+/* Code output code text*/
+.cell-output-stdout code {
+  color: #6073A6;
+  /*font-family: 'Courier New', Courier, monospace;*/
+  
+}
+
+/* Code output cell*/
+/*.cell-output-stdout {
+  background-color: #fafafa;
+}*/
+
+
+small, .small {
+  font-size: 17px;
+  /* background: #f4f5f9; */
+}
