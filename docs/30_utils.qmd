@@ -1,0 +1,53 @@
+---
+title: utils
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+```
+
+```{python}
+#| echo: false
+
+```
+
+Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.
+
+Reproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(set_all_seeds)))
+```
+
+We can set the seed for most of the libraries that we use in machine learning like: `numpy`, `torch`, `torch.cuda`, `mps` as well as for Python in general.
+
+```{python}
+set_all_seeds(seed=42)
+```
+
+If you are using `FLAGS` then simply replace the value of the seed for the dataclasss defined for the reproducibility. For example, if my dataclass is called `seed` then I would use:
+
+```python
+set_all_seeds(seed=FLAGS.seed)
+```
+
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(check_device)))
+```
+
+We can use the function as follows, which if the argument `verbose` is `True` it will print out the compute device currently available.
+```{python}
+device = check_device()
+```
+
