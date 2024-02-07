@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 3&nbsp; utils</title>
+<title>Machine learning for practical projects - 2&nbsp; utils</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../docs/00_data_processing.html" rel="prev">
+<link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">utils</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -148,14 +148,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docs/00_data_processing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Processing</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../docs/30_utils.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">utils</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></span></a>
   </div>
 </li>
     </ul>
@@ -178,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">utils</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">utils</span></h1>
 </div>
 
 
@@ -196,21 +190,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.</p>
-<hr>
 <p>Reproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.</p>
-<section id="set_all_seeds" class="level3 unnumbered">
+<div id="6f279eb9" class="cell" data-execution_count="3">
+<section id="set_all_seeds" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
 <h3 class="unnumbered anchored" data-anchor-id="set_all_seeds"><code>set_all_seeds</code></h3>
 <blockquote class="blockquote">
-<p>set_all_seeds(seed:int)</p>
+<p>set_all_seeds(seed: int)</p>
 </blockquote>
-<p><em>Set the seed for packages: python, numpy, torch, torch.cuda, and mps</em></p>
-<p>Arguments</p>
-<table class="table">
+<p><em>Set the seed for all packages: python, numpy, torch, torch.cuda, and mps.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 5%">
 <col style="width: 10%">
-<col style="width: 50%">
+<col style="width: 10%">
+<col style="width: 45%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -225,31 +219,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>seed</strong></td>
 <td>int</td>
 <td>None</td>
-<td>Positive integer value.</td>
+<td>Description not available</td>
 </tr>
 </tbody>
 </table>
+</section>
+</div>
 <p>We can set the seed for most of the libraries that we use in machine learning like: <code>numpy</code>, <code>torch</code>, <code>torch.cuda</code>, <code>mps</code> as well as for Python in general.</p>
-<div id="cell-7" class="cell" data-execution_count="3">
+<div id="92dd48c4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you are using <code>FLAGS</code> then simply replace the value of the seed for the dataclasss defined for the reproducibility. For example, if my dataclass is called <code>seed</code> then I would use:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(FLAGS.seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-</section>
-<section id="check_device" class="level3 unnumbered">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span>FLAGS.seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="25773f63" class="cell" data-execution_count="5">
+<section id="check_device" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
 <h3 class="unnumbered anchored" data-anchor-id="check_device"><code>check_device</code></h3>
 <blockquote class="blockquote">
-<p>check_device(verbose:bool)</p>
+<p>check_device(verbose: bool)</p>
 </blockquote>
 <p><em>Check which compute device is available on the machine.</em></p>
-<p>Arguments</p>
-<table class="table">
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 5%">
 <col style="width: 10%">
-<col style="width: 50%">
+<col style="width: 10%">
+<col style="width: 45%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -264,11 +259,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>verbose</strong></td>
 <td>bool</td>
 <td>True</td>
-<td>Print which device is recognized.</td>
+<td>Description not available</td>
 </tr>
 </tbody>
 </table>
-<div id="cell-11" class="cell" data-execution_count="5">
+</section>
+</div>
+<p>We can use the function as follows, which if the argument <code>verbose</code> is <code>True</code> it will print out the compute device currently available.</p>
+<div id="0ed224d0" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> check_device()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using mps device!</code></pre>
@@ -276,7 +274,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -668,8 +665,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../docs/00_data_processing.html" class="pagination-link  aria-label=" &lt;span="" processing&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Processing</span></span>
+      <a href="../index.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

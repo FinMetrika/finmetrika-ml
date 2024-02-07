@@ -3,4 +3,39 @@ code {
     color: #6073A6; /* code text color */
     background-color:white ; /* background code color */
   }
+
+/*Style quotations - block*/
+blockquote {
+  background: #fafafa;
+  border-left: 4px solid #8A8C3B; /* Adds a left border */
+  padding-left: 20px; /* Adds padding to the left */
+  margin-left: 0; /* Adjusts the left margin */
+  margin-right: 0; /* Adjusts the right margin */
+}
+
+/*Style quotations - inside block*/
+blockquote p {
+  display: inline;
+  color: #A8A947; /* Sets the text color */
+  font-style: normal; /* Makes the text italic */
+  font-family: 'Courier New', Courier;
+  font-weight: bold;
+}
+
+/* Code output code text*/
+.cell-output-stdout code {
+  color: #6073A6;
+  /*font-family: 'Courier New', Courier, monospace;*/
   
+}
+
+/* Code output cell*/
+/*.cell-output-stdout {
+  background-color: #fafafa;
+}*/
+
+
+small, .small {
+  font-size: 17px;
+  /* background: #f4f5f9; */
+}
