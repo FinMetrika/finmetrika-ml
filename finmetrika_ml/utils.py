@@ -13,7 +13,7 @@ def set_all_seeds(seed:int):
     """Set the seed for all packages: python, numpy, torch, torch.cuda, and mps.
 
     Args:
-        seed (int): Positive integer value.
+        seed (int): Any positive integer value.
     """
     random.seed(seed)  # python 
     np.random.seed(seed)  # numpy
@@ -28,7 +28,7 @@ def check_device(verbose:bool=True):
     """Check which compute device is available on the machine.
 
     Args:
-        verbose (bool): verbose argument - prints all
+        verbose (bool): Show all print statements.
 
     Returns:
         str: string name of the compute device available
@@ -54,11 +54,12 @@ def get_python_version():
     return sys.version.split()[0]
 
 
+
 def get_package_version(package_name):
     """Print the version of the Python package.
 
     Args:
-        package_name (str): name of the package
+        package_name (str): Name of the package.
     """
     try:
         package = __import__(package_name)
@@ -68,13 +69,13 @@ def get_package_version(package_name):
 
 
 
-
-
 def update_config(FLAGS):
     """
     Update config arguments if any change was done via CLI when
-    running "sh run.sh". FLAGS argument is instantiation of the
-    Config dataclass.
+    running "sh run.sh".
+    
+    Args:
+        FLAGS (dataclass): Instantiation of the `config` dataclass.
     """
     for i in range(1, len(sys.argv),2):
         attr_name = sys.argv[i]
@@ -91,8 +92,9 @@ def create_experiment_descr_file(config):
     experiment including all the parameters used.
 
     Args:
-        config (ProjectConfig): project parameters
+        config (module): Python script defining project parameters.
     """
+    #TODO fix this not to have module in the arguments
     # Get the parameters
     exp_description, exp_params = config.export_params()
     
@@ -110,6 +112,13 @@ def create_experiment_descr_file(config):
 
 
 def add_runtime_experiment_info(start_time, config):
+    """Create structure of the experiment info file.
+
+    Args:
+        start_time (_type_): _description_
+        config (_type_): _description_
+    """
+    #TODO fix this not to have module in the arguments
     exp_file_path = config.dir_experiments/config.experiment_version/"experiment_info.txt"
     end_time = datetime.now()
     dtime = end_time-start_time
