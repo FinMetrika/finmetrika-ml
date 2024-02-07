@@ -129,23 +129,42 @@ def generate_markdown_doc(func):
     # Extract function signature
     sig = inspect.signature(func)
     func_name = func.__name__
-    doc = func.__doc__ if func.__doc__ else ''
+    docstring = inspect.getdoc(func) or ''
     
     # Prepare Markdown for the function signature
     args_str = ', '.join([f"{p.name}: {p.annotation.__name__ if hasattr(p.annotation, '__name__') else 'Any'}" 
                           for p in sig.parameters.values()])
     markdown_output = f"### `{func_name}` {{.unnumbered}}\n> {func_name}({args_str})\n\n"
-    markdown_output += "*{}*\n\nArguments:\n\n".format(doc.split('\n\n')[0])  # Function description
+    
+    # Function description (first paragraph of the docstring)
+    func_description = docstring.split('\n\n')[0] if docstring else ''
+    markdown_output += f"*{func_description}*\n\nArguments:\n\n"
     
     # Table header
     markdown_output += "|       | type    |default| description|\n|--------|--------|--------|--------|\n"
+    
+    # Extract parameter descriptions
+    param_descriptions = {}
+    if "Args:" in docstring:
+        args_index = docstring.index("Args:")
+        args_section = docstring[args_index:]
+        for line in args_section.split('\n')[1:]:  # skip the "Args:" line
+            line = line.strip()
+            if line:  # non-empty line
+                parts = line.split(':')
+                if len(parts) > 1:
+                    param_name = parts[0].split(' ')[0]  # assuming "param_name (type)" format
+                    description = ':'.join(parts[1:]).strip()
+                    param_descriptions[param_name] = description
     
     # Parse parameters and defaults from signature
     for param in sig.parameters.values():
         param_name = param.name
         param_type = param.annotation.__name__ if hasattr(param.annotation, '__name__') else 'Any'
-        default = param.default if param.default != param.empty else 'None'
-        description = "Description not available"  # Placeholder for parameter description
+        default = param.default if param.default != inspect.Parameter.empty else 'None'
+        description = param_descriptions.get(param_name, "Description not available")
         
-        markdown_output += f"| **{param_name}**  | {param_type}   |{default}|{description}|\n"
+        markdown_output += f"| **{param_name}** | {param_type} | {default} | {description} |\n"
+    
     return markdown_output
+
