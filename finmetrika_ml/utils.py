@@ -1,10 +1,13 @@
 import sys
 import random
 import logging
+import inspect
 import platform
 from datetime import datetime
 import torch
 import numpy as np
+
+
 
 def set_all_seeds(seed:int):
     """Set the seed for all packages: python, numpy, torch, torch.cuda, and mps.
@@ -18,28 +21,10 @@ def set_all_seeds(seed:int):
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)  # torch.cuda
     torch.mps.manual_seed(seed) # mps
-    
-
-def get_python_version():
-    """Return the current running Python version.
-    """
-    return sys.version.split()[0]
 
 
-def get_package_version(package_name):
-    """Print the version of the Python package.
 
-    Args:
-        package_name (str): name of the package
-    """
-    try:
-        package = __import__(package_name)
-        return package.__version__
-    except ImportError:
-        return "Not Installed"
-
-
-def check_device(verbose:bool):
+def check_device(verbose:bool=True):
     """Check which compute device is available on the machine.
 
     Args:
@@ -60,6 +45,29 @@ def check_device(verbose:bool):
         print(f'Using {device} device!')
 
     return device
+
+
+
+def get_python_version():
+    """Return the current running Python version.
+    """
+    return sys.version.split()[0]
+
+
+def get_package_version(package_name):
+    """Print the version of the Python package.
+
+    Args:
+        package_name (str): name of the package
+    """
+    try:
+        package = __import__(package_name)
+        return package.__version__
+    except ImportError:
+        return "Not Installed"
+
+
+
 
 
 def update_config(FLAGS):
@@ -113,3 +121,31 @@ def add_runtime_experiment_info(start_time, config):
         f.write(f'\nTransformers Version: {get_package_version("transformers")}')
         f.write(f'\nNumPy Version: {get_package_version("numpy")}')
         f.write(f'\nPandas Version: {get_package_version("pandas")}')
+
+
+
+# Functions for documentation
+def generate_markdown_doc(func):
+    # Extract function signature
+    sig = inspect.signature(func)
+    func_name = func.__name__
+    doc = func.__doc__ if func.__doc__ else ''
+    
+    # Prepare Markdown for the function signature
+    args_str = ', '.join([f"{p.name}: {p.annotation.__name__ if hasattr(p.annotation, '__name__') else 'Any'}" 
+                          for p in sig.parameters.values()])
+    markdown_output = f"### `{func_name}` {{.unnumbered}}\n> {func_name}({args_str})\n\n"
+    markdown_output += "*{}*\n\nArguments:\n\n".format(doc.split('\n\n')[0])  # Function description
+    
+    # Table header
+    markdown_output += "|       | type    |default| description|\n|--------|--------|--------|--------|\n"
+    
+    # Parse parameters and defaults from signature
+    for param in sig.parameters.values():
+        param_name = param.name
+        param_type = param.annotation.__name__ if hasattr(param.annotation, '__name__') else 'Any'
+        default = param.default if param.default != param.empty else 'None'
+        description = "Description not available"  # Placeholder for parameter description
+        
+        markdown_output += f"| **{param_name}**  | {param_type}   |{default}|{description}|\n"
+    return markdown_output
