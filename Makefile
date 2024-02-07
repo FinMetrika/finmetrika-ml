@@ -14,3 +14,9 @@ release: ## package and upload release
 
 release-test: ## package and upload release on test PyPI
 	twine upload --repository testpypi dist/*
+
+render: ## render quarto documentation
+	quarto render
+
+publish: ## publish quarto documentation to github
+	quarto publish gh-pages
