@@ -11,8 +11,8 @@ def get_labels(df:pd.DataFrame,
     in the dataset.
 
     Args:
-        df (pd.DataFrame): dataframe in which the labels are contained
-        col_label (str): name of the column in the dataframe containing labels
+        df (pd.DataFrame): Dataframe in which the labels are contained.
+        col_label (str): Name of the column in the dataframe containing labels.
         verbose (bool, optional): Print the statements. Defaults to True.
     """
     # Extract unique labels
