@@ -30,3 +30,29 @@ def get_labels(df:pd.DataFrame,
               )
         
     return labels
+
+
+
+def count_tokens(df:pd.DataFrame, 
+                 col_input_ids:str="input_ids", 
+                 col_attn_mask:str=None):
+    """Counts the number of tokens in each row of a DataFrame where the 
+    attention mask is 1.
+
+    Args:
+        df (pd.DataFrame): Dataframe containing the token data.
+        col_input_ids (str, optional): Name of the column in df that contains the input IDs. Defaults to "input_ids".
+        col_attn_mask (str, optional): Name of the column in df that contains the attention masks. Defaults to None.
+        
+    Returns:
+        pd.Series with the count of tokens for each row.
+    
+    Examples:
+        df_train['cnt_tokens'] = count_tokens_in_dataframe(df_train)
+    """
+    
+    def count_tokens(row):
+        paired_tokens = zip(row['input_ids'], row['attention_mask'])
+        return sum(1 for input_ids, mask in paired_tokens if mask == 1)
+    
+    return df.progress_apply(count_tokens, axis=1)
