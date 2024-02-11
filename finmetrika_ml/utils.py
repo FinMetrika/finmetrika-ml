@@ -24,35 +24,11 @@ def set_all_seeds(seed:int):
 
 
 
-def check_device(verbose:bool=True):
-    """Check which compute device is available on the machine.
-
-    Args:
-        verbose (bool): Show all print statements.
-
-    Returns:
-        str: string name of the compute device available
-    """
-    
-    if torch.backends.mps.is_available():
-        device = "mps"
-    elif torch.cuda.is_available():
-        device = "cuda"
-    else:
-        device = "cpu"
-    
-    if verbose: 
-        print(f'Using {device} device!')
-
-    return device
-
-
-
 def get_python_version():
     """Return the current running Python version.
     """
     return sys.version.split()[0]
-
+#FIXME fix automatic doc generator in case of no arguments. Currently it prints empty table
 
 
 def get_package_version(package_name):
@@ -87,6 +63,68 @@ def update_config(FLAGS):
             logging.warning(F'No such attribute: {attr_name}')
 
 
+
+def check_device(verbose:bool=True):
+    """Check which compute device is available on the machine.
+
+    Args:
+        verbose (bool): Show all print statements.
+
+    Returns:
+        str: string name of the compute device available
+    """
+    
+    if torch.backends.mps.is_available():
+        device = "mps"
+    elif torch.cuda.is_available():
+        device = "cuda"
+    else:
+        device = "cpu"
+    
+    if verbose: 
+        print(f'Using {device} device!')
+
+    return device
+
+
+
+def moveTo(obj, device:str):
+    """Move an object to a specified device. It is a recursive function which
+    checks iteratively for every element of obj. The device is determined by the function check_device().
+    Ref: Inside Deep Learning by Raff E. page 15
+    
+    Args:
+        obj (): object
+        device (str): name of the device to move the obj to. Examples are "cuda", "mps, "cpu". 
+
+    Returns:
+        _type_: _description_
+    """
+    
+    # for lists
+    if isinstance(obj, list):
+        return [moveTo(x, device) for x in obj]
+    # Tuple: convert to list and proceed
+    elif isinstance(obj, tuple):
+        return tuple(moveTo(list(obj), device))
+    # Set: convert to list and proceed
+    elif isinstance(obj, set):
+        return set(moveTo(list(obj), device))
+    # Dictionary
+    elif isinstance(obj, dict):
+        to_ret = dict()
+        for k,v in obj.items():
+            to_ret[moveTo(k, device)] = moveTo(v, device)
+        return to_ret
+    # if the object has "to" attribute then apply
+    elif hasattr(obj, "to"):
+        return obj.to(device)
+    # Base case
+    else:
+        return obj
+
+
+
 def create_experiment_descr_file(config):
     """Create a txt file to include information on
     experiment including all the parameters used.
@@ -94,7 +132,7 @@ def create_experiment_descr_file(config):
     Args:
         config (module): Python script defining project parameters.
     """
-    #TODO fix this not to have module in the arguments
+    #FIXME fix this not to have module in the arguments
     # Get the parameters
     exp_description, exp_params = config.export_params()
     
@@ -118,7 +156,7 @@ def add_runtime_experiment_info(start_time, config):
         start_time (_type_): _description_
         config (_type_): _description_
     """
-    #TODO fix this not to have module in the arguments
+    #FIXME fix this not to have module in the arguments
     exp_file_path = config.dir_experiments/config.experiment_version/"experiment_info.txt"
     end_time = datetime.now()
     dtime = end_time-start_time
