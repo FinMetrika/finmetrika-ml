@@ -11,7 +11,8 @@ book:
     - docs/00_set_ml_project.qmd
     - docs/data/01_data.qmd
     - docs/data/02_data_processing.qmd
-    #- docs/30_utils.ipynb
+    - docs/data/03_data_vizualization.qmd
+    - docs/models/20_training.qmd
     - docs/30_utils.qmd
     #- references.qmd
 
