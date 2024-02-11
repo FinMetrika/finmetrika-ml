@@ -18,5 +18,10 @@ setup(
         "Natural Language :: English",
         "Operating System :: MacOS",
         "Programming Language :: Python :: 3",
-    ]
+    ],
+    entry_points={
+        'console_scripts': [
+            'fm_create_nb=finmetrika_ml.cli:main'
+        ]
+    }
 )
