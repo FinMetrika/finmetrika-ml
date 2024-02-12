@@ -1,0 +1,85 @@
+---
+title: training
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.model.training import *
+from finmetrika_ml.data.data_processing import *
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+from torch.utils.data import DataLoader
+import torch.nn as nn
+import seaborn as sns
+import numpy as np
+```
+
+# Training {.unnumbered}
+ 
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(TrainNN)))
+```
+
+Let's see a simple example of randomly generated data:
+```{python}
+# Define data
+X = np.linspace(0,20, num=200)
+y = X + np.cos(X)*2 + np.random.normal(size=X.shape)
+
+# Create a dataset & dataloader
+dataset_reg = RegressionDataset1D(X,y)
+training_dataloader = DataLoader(dataset_reg, shuffle =True)
+```
+
+
+```{python}
+#| echo: false
+sns.scatterplot(x=X,y=y)
+sns.despine()
+```
+
+Let's fit a simple 2 layer linear model with a `tanh` activation function:
+
+```{python}
+model = nn.Sequential(
+    nn.Linear(1, 10),
+    nn.Tanh(),
+    nn.Linear(10, 1),
+)
+
+train = TrainNN(
+    model=model,
+    training_dataloader=training_dataloader,
+    loss_fn=nn.MSELoss(),
+    optimizer=torch.optim.SGD(model.parameters(), lr=0.001),
+    num_epochs=20,
+    device=check_device()
+)
+
+# train the model
+print(f'Training ... ')
+train.train()
+```
+
+
+# Fine tuning {.unnumbered}
+## Feature extraction {.unnumbered}
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(FineTuneFtsExtraction)))
+```
+
+# Describing the model architecture {.unnumbered}
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(model_size)))
+```

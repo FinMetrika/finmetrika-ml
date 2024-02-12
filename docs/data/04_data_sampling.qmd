@@ -1,0 +1,26 @@
+---
+title: data_sampling
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.data.data_sampling import *
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+from torch.utils.data import DataLoader
+```
+
+# Stratified random sampling {.unnumbered}
+
+Sampling from a HuggingFace-like dataset:
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(stratified_sample_from_dataset)))
+```
+

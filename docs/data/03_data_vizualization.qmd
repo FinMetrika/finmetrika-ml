@@ -1,0 +1,29 @@
+---
+title: data_vizualization
+tbl-colwidths: [25,10,10,45]
+jupyter: 
+    kernelspec: 
+      name: "fm-ml"
+      language: "python"
+      display_name: "Python-fm-ml"
+---
+
+```{python}
+#| echo: false
+from finmetrika_ml.data.vizualization import *
+from finmetrika_ml.utils import *
+from IPython.display import Markdown
+```
+
+# Categorical data {.unnumbered}
+Plot frequency of classes using the bar chart including labels.
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(plot_freq_classes)))
+```
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(plot_tokens_per_class)))
+```

@@ -10,12 +10,19 @@ jupyter:
 
 ```{python}
 #| echo: false
-from finmetrika_ml.data import *
+from finmetrika_ml.data import data_processing
 from finmetrika_ml.utils import *
 from IPython.display import Markdown
 ```
 
+For classification tasks, or any categorical data feature we can obtain labels with
+
 ```{python}
 #| echo: false
-#out = display(Markdown(generate_markdown_doc(get_labels)))
+out = display(Markdown(generate_markdown_doc(data_processing.get_labels)))
+```
+
+``` python
+data_processing.get_labels(df=my_dataframe,
+                           col_label="col_label")
 ```

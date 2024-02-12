@@ -16,11 +16,13 @@ from IPython.display import Markdown
 
 Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.
 
+## Reproducibility {.unnumbered}
+
 Reproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.
 
 ```{python}
 #| echo: false
-out = display(Markdown(generate_markdown_doc(set_all_seeds)))
+display(Markdown(generate_markdown_doc(set_all_seeds)))
 ```
 
 We can set the seed for most of the libraries that we use in machine learning like: `numpy`, `torch`, `torch.cuda`, `mps` as well as for Python in general.
@@ -35,9 +37,11 @@ If you are using `FLAGS` then simply replace the value of the seed for the data 
 set_all_seeds(seed=FLAGS.seed)
 ```
 
+## Computation engine {.unnumbered}
+
 ```{python}
 #| echo: false
-out = display(Markdown(generate_markdown_doc(check_device)))
+display(Markdown(generate_markdown_doc(check_device)))
 ```
 
 We can use the function as follows, which if the argument `verbose` is `True` it will print out the compute device currently available.
@@ -46,4 +50,36 @@ We can use the function as follows, which if the argument `verbose` is `True` it
 device = check_device()
 ```
 
-# Creating experiment information document {.unnumbered}
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(moveTo)))
+```
+
+## System information {.unnumbered}
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(get_python_version)))
+```
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(get_package_version)))
+```
+
+## Creating experiment information document {.unnumbered}
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(update_config)))
+```
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(create_experiment_descr_file)))
+```
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(add_runtime_experiment_info)))
+```
