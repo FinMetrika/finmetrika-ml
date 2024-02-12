@@ -60,13 +60,13 @@ def count_tokens(df:pd.DataFrame,
 
 
 
-def extract_feature_vector(data_sample, model):
+def extract_feature_vector(data_sample, model, tokenizer):
     
     # Get compute device
     device = check_device()
     
     def extract_feature_vector(batch):
-        inputs = {k:v.to(device) for k,v in data_sample.items()}
+        inputs = {k:v.to(device) for k,v in data_sample.items() if k in tokenizer.model_input_names}
         with torch.no_grad():
             # outputs.last_hidden_state.size() >>> [batch_size, n_tokens, hidden_dim]
             last_hidden_state = model(**inputs).last_hidden_state
