@@ -1,5 +1,6 @@
 import pandas as pd
-
+import torch
+from finmetrika_ml.utils import *
 
 
 def get_labels(df:pd.DataFrame,
@@ -56,3 +57,39 @@ def count_tokens(df:pd.DataFrame,
         return sum(1 for input_ids, mask in paired_tokens if mask == 1)
     
     return df.progress_apply(count_tokens, axis=1)
+
+
+
+def extract_feature_vector(data_sample, model):
+    
+    # Get compute device
+    device = check_device()
+    
+    def extract_feature_vector(batch):
+        inputs = {k:v.to(device) for k,v in data_sample.items()}
+        with torch.no_grad():
+            # outputs.last_hidden_state.size() >>> [batch_size, n_tokens, hidden_dim]
+            last_hidden_state = model(**inputs).last_hidden_state
+        return {"feature_vector": last_hidden_state[:,0].cpu().numpy()}
+
+    data_sample.set_format('torch')
+    
+    return data_sample.map(extract_feature_vector, batched=True)
+
+
+class RegressionDataset1D(torch.utils.data.Dataset):
+    
+    def __init__(self, X, y):
+        self.X = X.reshape(-1,1)
+        self.y = y.reshape(-1,1)
+    
+    
+    def __getitem__(self, idx):
+        return torch.tensor(self.X[idx,:],
+                            dtype=torch.torch.float32),\
+                torch.tensor(self.y[idx,:],
+                             dype=torch.float32)
+        
+    
+    def __len__(self):
+        return self.X.shape[0]
