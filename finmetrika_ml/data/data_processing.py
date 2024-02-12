@@ -53,7 +53,7 @@ def count_tokens(df:pd.DataFrame,
     """
     
     def count_tokens(row):
-        paired_tokens = zip(row['input_ids'], row['attention_mask'])
+        paired_tokens = zip(row[col_input_ids], row[col_attn_mask])
         return sum(1 for input_ids, mask in paired_tokens if mask == 1)
     
     return df.progress_apply(count_tokens, axis=1)
