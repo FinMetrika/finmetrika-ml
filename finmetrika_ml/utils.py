@@ -209,7 +209,7 @@ def generate_markdown_doc(func):
         param_name = param.name
         param_type = param.annotation.__name__ if hasattr(param.annotation, '__name__') else 'Any'
         default = param.default if param.default != inspect.Parameter.empty else 'None'
-        description = param_descriptions.get(param_name, "Description not available")
+        description = param_descriptions.get(param_name, "")
         
         markdown_output += f"| **{param_name}** | {param_type} | {default} | {description} |\n"
     
