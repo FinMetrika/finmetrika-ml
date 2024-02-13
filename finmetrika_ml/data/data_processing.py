@@ -1,6 +1,8 @@
 import pandas as pd
 import torch
 from finmetrika_ml.utils import *
+from datasets import DatasetDict
+from transformers import PreTrainedModel, PreTrainedTokenizerBase, AutoModel
 
 
 def get_labels(df:pd.DataFrame,
@@ -60,21 +62,29 @@ def count_tokens(df:pd.DataFrame,
 
 
 
-def extract_feature_vector(data_sample, model, tokenizer):
-    
-    # Get compute device
-    device = check_device()
-    
-    def extract_feature_vector(batch):
-        inputs = {k:v.to(device) for k,v in data_sample.items() if k in tokenizer.model_input_names}
-        with torch.no_grad():
-            # outputs.last_hidden_state.size() >>> [batch_size, n_tokens, hidden_dim]
-            last_hidden_state = model(**inputs).last_hidden_state
-        return {"feature_vector": last_hidden_state[:,0].cpu().numpy()}
+def extract_feature_vector(data_sample:DatasetDict, 
+                           model:PreTrainedModel, 
+                           tokenizer:PreTrainedTokenizerBase,
+                           device:str):
+    """Extract features from large language models for text classification.
 
-    data_sample.set_format('torch')
+    Args:
+        data_sample (DatasetDict): Dataset including tokenized inputs. Expected to be a dictionary with keys matching the model's expected input names.
+        model (PreTrainedModel): The model from which to extract the feature vectors. Should be an instance of a class derived from transformers.PreTrainedModel.
+        tokenizer (PreTrainedTokenizerBase): The tokenizer corresponding to the model, used to identify model input names.
+        device (str): Compute engine to which the inputs should be transfered. Define using check_device().
+
+    Returns:
+        - dict: A dictionary containing the feature vectors under the key "feature_vector".
+    """
     
-    return data_sample.map(extract_feature_vector, batched=True)
+    inputs = {k:v.to(device) for k,v in data_sample.items() if k in tokenizer.model_input_names}
+    with torch.inference_mode():
+        # outputs.last_hidden_state.size() >>> [batch_size, n_tokens, hidden_dim]
+        last_hidden_state = model(**inputs).last_hidden_state
+    return {"feature_vector": last_hidden_state[:,0].cpu().numpy()}
+
+
 
 
 class RegressionDataset1D(torch.utils.data.Dataset):

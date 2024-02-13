@@ -10,19 +10,57 @@ jupyter:
 
 ```{python}
 #| echo: false
-from finmetrika_ml.data import data_processing
+from finmetrika_ml.data.data_processing import *
 from finmetrika_ml.utils import *
 from IPython.display import Markdown
+from datasets import load_from_disk
+from pathlib import Path
 ```
 
 For classification tasks, or any categorical data feature we can obtain labels with
 
 ```{python}
 #| echo: false
-out = display(Markdown(generate_markdown_doc(data_processing.get_labels)))
+out = display(Markdown(generate_markdown_doc(get_labels)))
 ```
 
 ``` python
-data_processing.get_labels(df=my_dataframe,
-                           col_label="col_label")
+get_labels(df=my_dataframe, col_label="col_label")
+```
+
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(count_tokens)))
+```
+
+
+
+
+# Feature Engineering {.unnumbered}
+
+Extract features from large language models for text classification. 
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(extract_feature_vector)))
+```
+
+Tokenized dataset means that the `DatasetDict` object has minimally `input_ids` in features for, minimally, `train` split. For some models, like BERT it will also have `attention_mask`. For example:
+```{python}
+#| echo: false
+data_dir = Path('/Users/icdonev/Developer/datasets/bank-trx/input/vdatatrx-encoded')
+my_dataset = load_from_disk(data_dir)
+```
+
+```{python}
+my_dataset
+```
+
+Example of usage:
+```python
+model_name = "distilbert-base-uncased"
+device = check_device()
+model = AutoModel.from_pretrained(model_name).to(device)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+my_dataset_lhs = extract_feature_vector(my_dataset, model, tokenizer)
 ```
