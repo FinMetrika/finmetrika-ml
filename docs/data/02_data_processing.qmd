@@ -13,8 +13,14 @@ jupyter:
 from finmetrika_ml.data.data_processing import *
 from finmetrika_ml.utils import *
 from IPython.display import Markdown
-from datasets import load_from_disk
+from datasets import load_dataset
+from transformers import AutoModel, AutoTokenizer
 from pathlib import Path
+```
+
+```{python}
+#| echo: false
+emotion = load_dataset("emotion", trust_remote_code=True)
 ```
 
 For classification tasks, or any categorical data feature we can obtain labels with
@@ -34,7 +40,23 @@ out = display(Markdown(generate_markdown_doc(count_tokens)))
 ```
 
 
+# Numericalization {.unnumbered}
 
+```{python}
+#| echo: false
+out = display(Markdown(generate_markdown_doc(tokenize)))
+```
+
+```{python}
+model_name = "distilbert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+emotion_enc = emotion.map(lambda batch: tokenize(batch, tokenizer),
+                          batched=True, batch_size=None)
+emotion_enc
+```
+
+We can see that the `tokenize` function added two more columns in our dataset, namely: `input_ids` and `attention_mask`. 
+ 
 
 # Feature Engineering {.unnumbered}
 
@@ -45,22 +67,18 @@ out = display(Markdown(generate_markdown_doc(extract_feature_vector)))
 ```
 
 Tokenized dataset means that the `DatasetDict` object has minimally `input_ids` in features for, minimally, `train` split. For some models, like BERT it will also have `attention_mask`. For example:
-```{python}
-#| echo: false
-data_dir = Path('/Users/icdonev/Developer/datasets/bank-trx/input/vdatatrx-encoded')
-my_dataset = load_from_disk(data_dir)
-```
+
 
 ```{python}
-my_dataset
+emotion
 ```
 
 Example of usage:
-```python
-model_name = "distilbert-base-uncased"
+```{python}
 device = check_device()
 model = AutoModel.from_pretrained(model_name).to(device)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-my_dataset_lhs = extract_feature_vector(my_dataset, model, tokenizer)
+emotion_enc.set_format('torch')
+emotion_lhs = emotion_enc\
+        .map(lambda batch: extract_feature_vector(batch, model, tokenizer, device), batched=True)
+emotion_lhs
 ```
