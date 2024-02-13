@@ -4,7 +4,27 @@
     "href": "index.html",
     "title": "Machine learning for practical projects",
     "section": "",
-    "text": "1 Introduction\nThe finmetrika-ml library is a machine learning library for practical projects, predominantly for the financial industry.\nThe library is organized as follows:\nfinmetrika_ml\n├── data\n    ├── data_processing.py\n    └── vizualization.py\n├── model\n    ├── training.py\n    ├── evaluation.py\n    └── metrics.py\n└── utils.py\nTo install use the pip command in your virtual environment:\npip install finmetrika_ml",
+    "text": "1 Introduction\nThe finmetrika-ml library is a machine learning library for practical projects, predominantly for the financial industry.\nThe library is organized as follows:",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "Machine learning for practical projects",
+    "section": "1.1 Installation",
+    "text": "1.1 Installation\nTo install use the pip command in your virtual environment:\npip install finmetrika_ml",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#create-from-templates",
+    "href": "index.html#create-from-templates",
+    "title": "Machine learning for practical projects",
+    "section": "1.2 Create from templates",
+    "text": "1.2 Create from templates\nTo create a Jupyter notebook from template run the following command in terminal:\nfm_create_nb path/notebook_name.ipynb\nand replace path with the path directory where you wish the notebook to be saved and notebook_name with your desired name choice.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -30,13 +50,103 @@
     ]
   },
   {
+    "objectID": "docs/data/02_data_processing.html",
+    "href": "docs/data/02_data_processing.html",
+    "title": "4  data_processing",
+    "section": "",
+    "text": "For classification tasks, or any categorical data feature we can obtain labels with\n\n\nget_labels\n\nget_labels(df: DataFrame, col_label: str, verbose: bool)\n\nExtract unique labels from the dataframe and save them to a list. Print the number of labels in the dataset as well as the first 5 labels if there are more than five labels in the dataset.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndf\nDataFrame\nNone\nDataframe in which the labels are contained.\n\n\ncol_label\nstr\nNone\nName of the column in the dataframe containing labels.\n\n\nverbose\nbool\nTrue\nPrint the statements. Defaults to True.\n\n\n\n\n\nget_labels(df=my_dataframe, col_label=\"col_label\")\n\n\ncount_tokens\n\ncount_tokens(df: DataFrame, col_input_ids: str, col_attn_mask: str)\n\nCounts the number of tokens in each row of a DataFrame where the attention mask is 1.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndf\nDataFrame\nNone\nDataframe containing the token data.\n\n\ncol_input_ids\nstr\ninput_ids\nName of the column in df that contains the input IDs. Defaults to “input_ids”.\n\n\ncol_attn_mask\nstr\nNone\nName of the column in df that contains the attention masks. Defaults to None.\n\n\n\n\n\n\nFeature Engineering\nExtract features from large language models for text classification.\n\n\nextract_feature_vector\n\nextract_feature_vector(data_sample: DatasetDict, model: PreTrainedModel, tokenizer: PreTrainedTokenizerBase, device: str)\n\nExtract features from large language models for text classification.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndata_sample\nDatasetDict\nNone\nDataset including tokenized inputs. Expected to be a dictionary with keys matching the model’s expected input names.\n\n\nmodel\nPreTrainedModel\nNone\nThe model from which to extract the feature vectors. Should be an instance of a class derived from transformers.PreTrainedModel.\n\n\ntokenizer\nPreTrainedTokenizerBase\nNone\nThe tokenizer corresponding to the model, used to identify model input names.\n\n\ndevice\nstr\nNone\nCompute engine to which the inputs should be transfered. Define using check_device().\n\n\n\n\n\nTokenized dataset means that the DatasetDict object has minimally input_ids in features for, minimally, train split. For some models, like BERT it will also have attention_mask. For example:\n\nmy_dataset\n\nDatasetDict({\n    train: Dataset({\n        features: ['text', 'label', 'input_ids', 'attention_mask'],\n        num_rows: 125776\n    })\n    validation: Dataset({\n        features: ['text', 'label', 'input_ids', 'attention_mask'],\n        num_rows: 32342\n    })\n    test: Dataset({\n        features: ['text', 'label', 'input_ids', 'attention_mask'],\n        num_rows: 21563\n    })\n    other: Dataset({\n        features: ['text', 'label', 'input_ids', 'attention_mask'],\n        num_rows: 35399\n    })\n    rest: Dataset({\n        features: ['text', 'label', 'input_ids', 'attention_mask'],\n        num_rows: 1581911\n    })\n})\n\n\nExample of usage:\nmodel_name = \"distilbert-base-uncased\"\ndevice = check_device()\nmodel = AutoModel.from_pretrained(model_name).to(device)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nmy_dataset_lhs = extract_feature_vector(my_dataset, model, tokenizer)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>data_processing</span>"
+    ]
+  },
+  {
+    "objectID": "docs/data/04_data_sampling.html",
+    "href": "docs/data/04_data_sampling.html",
+    "title": "5  data_sampling",
+    "section": "",
+    "text": "Stratified random sampling\nSampling from a HuggingFace-like dataset:\n\n\nstratified_sample_from_dataset\n\nstratified_sample_from_dataset(data: DatasetDict, by_split: str, random_seed: int, perc_sample: float, return_complement_sample: bool)\n\nStratified sampling without replacement. Sample a percentage of a dataset given the dataset split. If ‘return_complement_sample’ is set to True then the function returns the complement sample as well.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndata\nDatasetDict\nNone\n\n\n\nby_split\nstr\nNone\nWhich data subset based on split should we sample from. Example: ‘train’.\n\n\nrandom_seed\nint\nNone\nProject arguments.\n\n\nperc_sample\nfloat\nNone\npercentage of samples to obtain\n\n\nreturn_complement_sample\nbool\nTrue\nSave the compleent sample as well.\n\n\n\n\n\nFor example, if we have a HuggingFace dataset emotion\n\nemotion\n\nDatasetDict({\n    train: Dataset({\n        features: ['text', 'label'],\n        num_rows: 16000\n    })\n    validation: Dataset({\n        features: ['text', 'label'],\n        num_rows: 2000\n    })\n    test: Dataset({\n        features: ['text', 'label'],\n        num_rows: 2000\n    })\n})\n\n\nSay we want to create a smaller sample of 1% of train data but using stratified sampling. We should define which split to sample from and the percentage of samples. Note that due to stratified nature of sampling and depending on how many label examples are present in each label group there can be a possibility that we sample (in count) less or more than what you would get as exact 1% of total dataset.\n\nemotion_sub = stratified_sample_from_dataset(\n                  data=emotion, \n                  by_split='train', \n                  random_seed=42, \n                  perc_sample=0.01)\nemotion_sub\n\nDatasetDict({\n    train: Dataset({\n        features: ['text', 'label'],\n        num_rows: 161\n    })\n    trainC: Dataset({\n        features: ['text', 'label'],\n        num_rows: 15839\n    })\n})",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>data_sampling</span>"
+    ]
+  },
+  {
+    "objectID": "docs/data/03_data_vizualization.html",
+    "href": "docs/data/03_data_vizualization.html",
+    "title": "6  data_vizualization",
+    "section": "",
+    "text": "Categorical data\nPlot frequency of classes using the bar chart including labels.\n\n\nplot_freq_classes\n\nplot_freq_classes(df: DataFrame, class_column: str, plot_no_classes: int, bar_color: str)\n\nCreate a horizontal bar plot of frequency classes.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndf\nDataFrame\nNone\nDataframe containing the class.\n\n\nclass_column\nstr\nNone\nName of the column in df that contains the class label.\n\n\nplot_no_classes\nint\nNone\nNumber of classes to plot.\n\n\nbar_color\nstr\n#1f77b4\nColor of the bars as HEX value.\n\n\n\n\n\n\n\nplot_tokens_per_class\n\nplot_tokens_per_class(df: DataFrame, class_column: str, tokens_cnt_column: str)\n\nPlot a box-plot of the number of tokens per sequence. All classes are plotted in a decreasing order given by the median value.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\ndf\nDataFrame\nNone\nDataframe containing the class_column and tokens_cnt_column.\n\n\nclass_column\nstr\nNone\nName of the column in df that contains the class label.\n\n\ntokens_cnt_column\nstr\nNone\nName of the column in df that contains the number of tokens per sequence.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>data_vizualization</span>"
+    ]
+  },
+  {
+    "objectID": "docs/models/20_training.html",
+    "href": "docs/models/20_training.html",
+    "title": "7  training",
+    "section": "",
+    "text": "Training\nTrainNN\n\nTrainNN(model: _empty, training_dataloader: DataLoader, loss_fn: str, optimizer: _empty, num_epochs: int, device: str)\n\nTrain a neural network.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nmodel\n_empty\nNone\nInstantiated model class or a defined model architecture.\n\n\ntraining_dataloader\nDataLoader\nNone\nDataloader for training.\n\n\nloss_fn\nstr\nNone\nLoss function\n\n\noptimizer\n_empty\nNone\noptimizer\n\n\nnum_epochs\nint\nNone\nNumber of epochs to train.\n\n\ndevice\nstr\nNone\nDevice on which to train the model. Use utils.check_device().\nLet’s see a simple example of randomly generated data:\n# Define data\nX = np.linspace(0,20, num=200)\ny = X + np.cos(X)*2 + np.random.normal(size=X.shape)\n\n# Create a dataset & dataloader\ndataset_reg = RegressionDataset1D(X,y)\ntraining_dataloader = DataLoader(dataset_reg, shuffle =True)\nLet’s fit a simple 2 layer linear model with a tanh activation function:\nmodel = nn.Sequential(\n    nn.Linear(1, 10),\n    nn.Tanh(),\n    nn.Linear(10, 1),\n)\n\ntrain = TrainNN(\n    model=model,\n    training_dataloader=training_dataloader,\n    loss_fn=nn.MSELoss(),\n    optimizer=torch.optim.SGD(model.parameters(), lr=0.001),\n    num_epochs=20,\n    device=check_device()\n)\n\n# train the model\nprint(f'Training ... ')\ntrain.train()\n\nUsing mps device!\nTraining ... \n\n\n  0%|          | 0/20 [00:00&lt;?, ?it/s]100%|██████████| 20/20 [00:00&lt;00:00, 250406.21it/s]",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>training</span>"
+    ]
+  },
+  {
+    "objectID": "docs/models/20_training.html#feature-extraction",
+    "href": "docs/models/20_training.html#feature-extraction",
+    "title": "7  training",
+    "section": "Feature extraction",
+    "text": "Feature extraction\n\n\nFineTuneFtsExtraction\n\nFineTuneFtsExtraction(model_name_hf: _empty, dataset_hf: DatasetDict, use_hf: bool)\n\nFine tune a model using feature extraction. Training is done on the hidden states as features, without modifying the pretrained model.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nmodel_name_hf\n_empty\nNone\nModel name as shown on HuggingFace\n\n\ndataset_hf\nDatasetDict\nNone\nDataset dictionary with minimal splits:\n\n\nuse_hf\nbool\nTrue\nUse transformers library for training.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>training</span>"
+    ]
+  },
+  {
     "objectID": "docs/30_utils.html",
     "href": "docs/30_utils.html",
-    "title": "5  utils",
+    "title": "8  utils",
     "section": "",
-    "text": "Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.\nReproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.\n\n\nset_all_seeds\n\nset_all_seeds(seed: int)\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nseed\nint\nNone\nDescription not available\n\n\n\n\n\nWe can set the seed for most of the libraries that we use in machine learning like: numpy, torch, torch.cuda, mps as well as for Python in general.\n\nset_all_seeds(seed=42)\n\nIf you are using FLAGS then simply replace the value of the seed for the data class defined for the reproducibility. For example, if my data class is called seed then I would use:\nset_all_seeds(seed=FLAGS.seed)\n\n\ncheck_device\n\ncheck_device(verbose: bool)\n\nCheck which compute device is available on the machine.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nverbose\nbool\nTrue\nDescription not available\n\n\n\n\n\nWe can use the function as follows, which if the argument verbose is True it will print out the compute device currently available.\n\ndevice = check_device()\n\nUsing mps device!\n\n\n\nCreating experiment information document",
+    "text": "Reproducibility\nReproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.\nset_all_seeds\n\nset_all_seeds(seed: int)\n\nSet the seed for all packages: python, numpy, torch, torch.cuda, and mps.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nseed\nint\nNone\nAny positive integer value.\nWe can set the seed for most of the libraries that we use in machine learning like: numpy, torch, torch.cuda, mps as well as for Python in general.\nset_all_seeds(seed=42)\nIf you are using FLAGS then simply replace the value of the seed for the data class defined for the reproducibility. For example, if my data class is called seed then I would use:",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>utils</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>utils</span>"
+    ]
+  },
+  {
+    "objectID": "docs/30_utils.html#reproducibility",
+    "href": "docs/30_utils.html#reproducibility",
+    "title": "8  utils",
+    "section": "",
+    "text": "set_all_seeds(seed=FLAGS.seed)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>utils</span>"
+    ]
+  },
+  {
+    "objectID": "docs/30_utils.html#computation-engine",
+    "href": "docs/30_utils.html#computation-engine",
+    "title": "8  utils",
+    "section": "Computation engine",
+    "text": "Computation engine\n\n\ncheck_device\n\ncheck_device(verbose: bool)\n\nCheck which compute device is available on the machine.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nverbose\nbool\nTrue\nShow all print statements.\n\n\n\n\n\nWe can use the function as follows, which if the argument verbose is True it will print out the compute device currently available.\n\ndevice = check_device()\n\nUsing mps device!\n\n\n\n\nmoveTo\n\nmoveTo(obj: _empty, device: str)\n\nMove an object to a specified device. It is a recursive function which checks iteratively for every element of obj. The device is determined by the function check_device(). Ref: Inside Deep Learning by Raff E. page 15\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nobj\n_empty\nNone\nobject\n\n\ndevice\nstr\nNone\nname of the device to move the obj to. Examples are “cuda”, “mps,”cpu”.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>utils</span>"
+    ]
+  },
+  {
+    "objectID": "docs/30_utils.html#system-information",
+    "href": "docs/30_utils.html#system-information",
+    "title": "8  utils",
+    "section": "System information",
+    "text": "System information\n\n\nget_python_version\n\nget_python_version()\n\nReturn the current running Python version. \nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\n\n\n\n\nget_package_version\n\nget_package_version(package_name: _empty)\n\nPrint the version of the Python package.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\npackage_name\n_empty\nNone\nName of the package.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>utils</span>"
+    ]
+  },
+  {
+    "objectID": "docs/30_utils.html#creating-experiment-information-document",
+    "href": "docs/30_utils.html#creating-experiment-information-document",
+    "title": "8  utils",
+    "section": "Creating experiment information document",
+    "text": "Creating experiment information document\n\n\nupdate_config\n\nupdate_config(FLAGS: _empty)\n\nUpdate config arguments if any change was done via CLI when running “sh run.sh”.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nFLAGS\n_empty\nNone\nInstantiation of the config dataclass.\n\n\n\n\n\n\n\ncreate_experiment_descr_file\n\ncreate_experiment_descr_file(config: _empty)\n\nCreate a txt file to include information on experiment including all the parameters used.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nconfig\n_empty\nNone\nPython script defining project parameters.\n\n\n\n\n\n\n\nadd_runtime_experiment_info\n\nadd_runtime_experiment_info(start_time: _empty, config: _empty)\n\nCreate structure of the experiment info file.\nArguments:\n\n\n\n\n\n\n\n\n\n\ntype\ndefault\ndescription\n\n\n\n\nstart_time\n_empty\nNone\ndescription\n\n\nconfig\n_empty\nNone\ndescription",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>utils</span>"
     ]
   }
 ]

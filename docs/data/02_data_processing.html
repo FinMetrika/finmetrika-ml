@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../docs/30_utils.html" rel="next">
+<link href="../../docs/data/04_data_sampling.html" rel="next">
 <link href="../../docs/data/01_data.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -133,8 +167,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../docs/data/04_data_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/data/03_data_vizualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/models/20_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../docs/30_utils.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">utils</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">utils</span></span></a>
   </div>
 </li>
     </ul>
@@ -143,7 +195,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#get_labels" id="toc-get_labels" class="nav-link active" data-scroll-target="#get_labels"><code>get_labels</code></a></li>
+  <li><a href="#count_tokens" id="toc-count_tokens" class="nav-link" data-scroll-target="#count_tokens"><code>count_tokens</code></a></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature Engineering</a>
+  <ul>
+  <li><a href="#extract_feature_vector" id="toc-extract_feature_vector" class="nav-link" data-scroll-target="#extract_feature_vector"><code>extract_feature_vector</code></a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -167,8 +230,193 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>For classification tasks, or any categorical data feature we can obtain labels with</p>
+<div id="8c100883" class="cell" data-execution_count="2">
+<section id="get_labels" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="get_labels"><code>get_labels</code></h3>
+<blockquote class="blockquote">
+<p>get_labels(df: DataFrame, col_label: str, verbose: bool)</p>
+</blockquote>
+<p><em>Extract unique labels from the dataframe and save them to a list. Print the number of labels in the dataset as well as the first 5 labels if there are more than five labels in the dataset.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>df</strong></td>
+<td>DataFrame</td>
+<td>None</td>
+<td>Dataframe in which the labels are contained.</td>
+</tr>
+<tr class="even">
+<td><strong>col_label</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Name of the column in the dataframe containing labels.</td>
+</tr>
+<tr class="odd">
+<td><strong>verbose</strong></td>
+<td>bool</td>
+<td>True</td>
+<td>Print the statements. Defaults to True.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>get_labels(df<span class="op">=</span>my_dataframe, col_label<span class="op">=</span><span class="st">"col_label"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="db208a91" class="cell" data-execution_count="3">
+<section id="count_tokens" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="count_tokens"><code>count_tokens</code></h3>
+<blockquote class="blockquote">
+<p>count_tokens(df: DataFrame, col_input_ids: str, col_attn_mask: str)</p>
+</blockquote>
+<p><em>Counts the number of tokens in each row of a DataFrame where the attention mask is 1.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>df</strong></td>
+<td>DataFrame</td>
+<td>None</td>
+<td>Dataframe containing the token data.</td>
+</tr>
+<tr class="even">
+<td><strong>col_input_ids</strong></td>
+<td>str</td>
+<td>input_ids</td>
+<td>Name of the column in df that contains the input IDs. Defaults to “input_ids”.</td>
+</tr>
+<tr class="odd">
+<td><strong>col_attn_mask</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Name of the column in df that contains the attention masks. Defaults to None.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<section id="feature-engineering" class="level1 unnumbered">
+<h1 class="unnumbered">Feature Engineering</h1>
+<p>Extract features from large language models for text classification.</p>
+<div id="999feb88" class="cell" data-execution_count="4">
+<section id="extract_feature_vector" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="extract_feature_vector"><code>extract_feature_vector</code></h3>
+<blockquote class="blockquote">
+<p>extract_feature_vector(data_sample: DatasetDict, model: PreTrainedModel, tokenizer: PreTrainedTokenizerBase, device: str)</p>
+</blockquote>
+<p><em>Extract features from large language models for text classification.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>data_sample</strong></td>
+<td>DatasetDict</td>
+<td>None</td>
+<td>Dataset including tokenized inputs. Expected to be a dictionary with keys matching the model’s expected input names.</td>
+</tr>
+<tr class="even">
+<td><strong>model</strong></td>
+<td>PreTrainedModel</td>
+<td>None</td>
+<td>The model from which to extract the feature vectors. Should be an instance of a class derived from transformers.PreTrainedModel.</td>
+</tr>
+<tr class="odd">
+<td><strong>tokenizer</strong></td>
+<td>PreTrainedTokenizerBase</td>
+<td>None</td>
+<td>The tokenizer corresponding to the model, used to identify model input names.</td>
+</tr>
+<tr class="even">
+<td><strong>device</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Compute engine to which the inputs should be transfered. Define using check_device().</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<p>Tokenized dataset means that the <code>DatasetDict</code> object has minimally <code>input_ids</code> in features for, minimally, <code>train</code> split. For some models, like BERT it will also have <code>attention_mask</code>. For example:</p>
+<div id="9b3b3d68" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>DatasetDict({
+    train: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 125776
+    })
+    validation: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 32342
+    })
+    test: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 21563
+    })
+    other: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 35399
+    })
+    rest: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 1581911
+    })
+})</code></pre>
+</div>
+</div>
+<p>Example of usage:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"distilbert-base-uncased"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> check_device()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModel.from_pretrained(model_name).to(device)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>my_dataset_lhs <span class="op">=</span> extract_feature_vector(my_dataset, model, tokenizer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -565,8 +813,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../docs/30_utils.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>utils</span>">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">utils</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../docs/data/04_data_sampling.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>data_sampling</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

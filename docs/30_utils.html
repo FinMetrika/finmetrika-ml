@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 5&nbsp; utils</title>
+<title>Machine learning for practical projects - 8&nbsp; utils</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../docs/data/02_data_processing.html" rel="prev">
+<link href="../docs/models/20_training.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">utils</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/30_utils.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">utils</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -166,8 +166,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../docs/data/04_data_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/data/03_data_vizualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/models/20_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../docs/30_utils.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">utils</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">utils</span></span></a>
   </div>
 </li>
     </ul>
@@ -180,9 +198,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#set_all_seeds" id="toc-set_all_seeds" class="nav-link active" data-scroll-target="#set_all_seeds"><code>set_all_seeds</code></a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link active" data-scroll-target="#reproducibility">Reproducibility</a>
+  <ul>
+  <li><a href="#set_all_seeds" id="toc-set_all_seeds" class="nav-link" data-scroll-target="#set_all_seeds"><code>set_all_seeds</code></a></li>
+  </ul></li>
+  <li><a href="#computation-engine" id="toc-computation-engine" class="nav-link" data-scroll-target="#computation-engine">Computation engine</a>
+  <ul>
   <li><a href="#check_device" id="toc-check_device" class="nav-link" data-scroll-target="#check_device"><code>check_device</code></a></li>
-  <li><a href="#creating-experiment-information-document" id="toc-creating-experiment-information-document" class="nav-link" data-scroll-target="#creating-experiment-information-document">Creating experiment information document</a></li>
+  <li><a href="#moveto" id="toc-moveto" class="nav-link" data-scroll-target="#moveto"><code>moveTo</code></a></li>
+  </ul></li>
+  <li><a href="#system-information" id="toc-system-information" class="nav-link" data-scroll-target="#system-information">System information</a>
+  <ul>
+  <li><a href="#get_python_version" id="toc-get_python_version" class="nav-link" data-scroll-target="#get_python_version"><code>get_python_version</code></a></li>
+  <li><a href="#get_package_version" id="toc-get_package_version" class="nav-link" data-scroll-target="#get_package_version"><code>get_package_version</code></a></li>
+  </ul></li>
+  <li><a href="#creating-experiment-information-document" id="toc-creating-experiment-information-document" class="nav-link" data-scroll-target="#creating-experiment-information-document">Creating experiment information document</a>
+  <ul>
+  <li><a href="#update_config" id="toc-update_config" class="nav-link" data-scroll-target="#update_config"><code>update_config</code></a></li>
+  <li><a href="#create_experiment_descr_file" id="toc-create_experiment_descr_file" class="nav-link" data-scroll-target="#create_experiment_descr_file"><code>create_experiment_descr_file</code></a></li>
+  <li><a href="#add_runtime_experiment_info" id="toc-add_runtime_experiment_info" class="nav-link" data-scroll-target="#add_runtime_experiment_info"><code>add_runtime_experiment_info</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -191,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">utils</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">utils</span></h1>
 </div>
 
 
@@ -209,8 +244,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Various utility functions for checking and defining compute engine, logging and creating the experimentation documentation.</p>
+<section id="reproducibility" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="reproducibility">Reproducibility</h2>
 <p>Reproducibility is one of the most important aspects of proper project development and management, for ourselves, as well as for other people to whom we will share the project and possibly need to make decisions based on the results.</p>
-<div id="40a26ca0" class="cell" data-execution_count="2">
+<div id="30f19695" class="cell" data-execution_count="2">
 <section id="set_all_seeds" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
 <h3 class="unnumbered anchored" data-anchor-id="set_all_seeds"><code>set_all_seeds</code></h3>
 <blockquote class="blockquote">
@@ -238,19 +275,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>seed</strong></td>
 <td>int</td>
 <td>None</td>
-<td>Description not available</td>
+<td>Any positive integer value.</td>
 </tr>
 </tbody>
 </table>
 </section>
 </div>
 <p>We can set the seed for most of the libraries that we use in machine learning like: <code>numpy</code>, <code>torch</code>, <code>torch.cuda</code>, <code>mps</code> as well as for Python in general.</p>
-<div id="e9b1e7e3" class="cell" data-execution_count="3">
+<div id="96c4421a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you are using <code>FLAGS</code> then simply replace the value of the seed for the data class defined for the reproducibility. For example, if my data class is called <code>seed</code> then I would use:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set_all_seeds(seed<span class="op">=</span>FLAGS.seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="083daac3" class="cell" data-execution_count="4">
+</section>
+<section id="computation-engine" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="computation-engine">Computation engine</h2>
+<div id="30b2961e" class="cell" data-execution_count="4">
 <section id="check_device" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
 <h3 class="unnumbered anchored" data-anchor-id="check_device"><code>check_device</code></h3>
 <blockquote class="blockquote">
@@ -278,21 +318,234 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>verbose</strong></td>
 <td>bool</td>
 <td>True</td>
-<td>Description not available</td>
+<td>Show all print statements.</td>
 </tr>
 </tbody>
 </table>
 </section>
 </div>
 <p>We can use the function as follows, which if the argument <code>verbose</code> is <code>True</code> it will print out the compute device currently available.</p>
-<div id="5deb5909" class="cell" data-execution_count="5">
+<div id="110e6774" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> check_device()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using mps device!</code></pre>
 </div>
 </div>
-<section id="creating-experiment-information-document" class="level1 unnumbered">
-<h1 class="unnumbered">Creating experiment information document</h1>
+<div id="5dea0064" class="cell" data-execution_count="6">
+<section id="moveto" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="moveto"><code>moveTo</code></h3>
+<blockquote class="blockquote">
+<p>moveTo(obj: _empty, device: str)</p>
+</blockquote>
+<p><em>Move an object to a specified device. It is a recursive function which checks iteratively for every element of obj. The device is determined by the function check_device(). Ref: Inside Deep Learning by Raff E. page 15</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>obj</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>object</td>
+</tr>
+<tr class="even">
+<td><strong>device</strong></td>
+<td>str</td>
+<td>None</td>
+<td>name of the device to move the obj to. Examples are “cuda”, “mps,”cpu”.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</section>
+<section id="system-information" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="system-information">System information</h2>
+<div id="156202a8" class="cell" data-execution_count="7">
+<section id="get_python_version" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="get_python_version"><code>get_python_version</code></h3>
+<blockquote class="blockquote">
+<p>get_python_version()</p>
+</blockquote>
+<p><em>Return the current running Python version. </em></p>
+<p>Arguments:</p>
+<table style="width:90%;">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+
+</table>
+</section>
+</div>
+<div id="85376b82" class="cell" data-execution_count="8">
+<section id="get_package_version" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="get_package_version"><code>get_package_version</code></h3>
+<blockquote class="blockquote">
+<p>get_package_version(package_name: _empty)</p>
+</blockquote>
+<p><em>Print the version of the Python package.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>package_name</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Name of the package.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</section>
+<section id="creating-experiment-information-document" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="creating-experiment-information-document">Creating experiment information document</h2>
+<div id="ebb52ffd" class="cell" data-execution_count="9">
+<section id="update_config" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="update_config"><code>update_config</code></h3>
+<blockquote class="blockquote">
+<p>update_config(FLAGS: _empty)</p>
+</blockquote>
+<p><em>Update config arguments if any change was done via CLI when running “sh run.sh”.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>FLAGS</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Instantiation of the <code>config</code> dataclass.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<div id="542f1594" class="cell" data-execution_count="10">
+<section id="create_experiment_descr_file" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="create_experiment_descr_file"><code>create_experiment_descr_file</code></h3>
+<blockquote class="blockquote">
+<p>create_experiment_descr_file(config: _empty)</p>
+</blockquote>
+<p><em>Create a txt file to include information on experiment including all the parameters used.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>config</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Python script defining project parameters.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<div id="9dfbc6cf" class="cell" data-execution_count="11">
+<section id="add_runtime_experiment_info" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="add_runtime_experiment_info"><code>add_runtime_experiment_info</code></h3>
+<blockquote class="blockquote">
+<p>add_runtime_experiment_info(start_time: _empty, config: _empty)</p>
+</blockquote>
+<p><em>Create structure of the experiment info file.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>start_time</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td><em>description</em></td>
+</tr>
+<tr class="even">
+<td><strong>config</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td><em>description</em></td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
 
 
 </section>
@@ -687,8 +940,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../docs/data/02_data_processing.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">data_processing</span></span>
+      <a href="../docs/models/20_training.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

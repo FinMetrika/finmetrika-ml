@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 3&nbsp; Data</title>
+<title>Machine learning for practical projects - 6&nbsp; data_vizualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../docs/data/02_data_processing.html" rel="next">
-<link href="../../docs/00_set_ml_project.html" rel="prev">
+<link href="../../docs/models/20_training.html" rel="next">
+<link href="../../docs/data/04_data_sampling.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/data/01_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/data/03_data_vizualization.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -121,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></span></a>
   </div>
 </li>
@@ -139,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/data/03_data_vizualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../../docs/data/03_data_vizualization.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></span></a>
   </div>
 </li>
@@ -161,14 +161,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#categorical-data" id="toc-categorical-data" class="nav-link active" data-scroll-target="#categorical-data">Categorical data</a>
+  <ul>
+  <li><a href="#plot_freq_classes" id="toc-plot_freq_classes" class="nav-link" data-scroll-target="#plot_freq_classes"><code>plot_freq_classes</code></a></li>
+  <li><a href="#plot_tokens_per_class" id="toc-plot_tokens_per_class" class="nav-link" data-scroll-target="#plot_tokens_per_class"><code>plot_tokens_per_class</code></a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></h1>
 </div>
 
 
@@ -185,12 +195,110 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data module consists of:<br>
-- <code>data_read.py</code>: loading the local txt or csv files<br>
-- <code>create_datasets</code>: creating HuggingFace datasets from local files<br>
--</p>
+<section id="categorical-data" class="level1 unnumbered">
+<h1 class="unnumbered">Categorical data</h1>
+<p>Plot frequency of classes using the bar chart including labels.</p>
+<div id="aa48e215" class="cell" data-execution_count="2">
+<section id="plot_freq_classes" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="plot_freq_classes"><code>plot_freq_classes</code></h3>
+<blockquote class="blockquote">
+<p>plot_freq_classes(df: DataFrame, class_column: str, plot_no_classes: int, bar_color: str)</p>
+</blockquote>
+<p><em>Create a horizontal bar plot of frequency classes.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>df</strong></td>
+<td>DataFrame</td>
+<td>None</td>
+<td>Dataframe containing the class.</td>
+</tr>
+<tr class="even">
+<td><strong>class_column</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Name of the column in df that contains the class label.</td>
+</tr>
+<tr class="odd">
+<td><strong>plot_no_classes</strong></td>
+<td>int</td>
+<td>None</td>
+<td>Number of classes to plot.</td>
+</tr>
+<tr class="even">
+<td><strong>bar_color</strong></td>
+<td>str</td>
+<td>#1f77b4</td>
+<td>Color of the bars as HEX value.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<div id="6cb2f443" class="cell" data-execution_count="3">
+<section id="plot_tokens_per_class" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="plot_tokens_per_class"><code>plot_tokens_per_class</code></h3>
+<blockquote class="blockquote">
+<p>plot_tokens_per_class(df: DataFrame, class_column: str, tokens_cnt_column: str)</p>
+</blockquote>
+<p><em>Plot a box-plot of the number of tokens per sequence. All classes are plotted in a decreasing order given by the median value.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>df</strong></td>
+<td>DataFrame</td>
+<td>None</td>
+<td>Dataframe containing the class_column and tokens_cnt_column.</td>
+</tr>
+<tr class="even">
+<td><strong>class_column</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Name of the column in df that contains the class label.</td>
+</tr>
+<tr class="odd">
+<td><strong>tokens_cnt_column</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Name of the column in df that contains the number of tokens per sequence.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -582,13 +690,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../docs/00_set_ml_project.html" class="pagination-link  aria-label=" &lt;span="" up="" the="" machine="" learning="" project&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Setting up the machine learning project</span></span>
+      <a href="../../docs/data/04_data_sampling.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../docs/data/02_data_processing.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>data_processing</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">data_processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../docs/models/20_training.html" class="pagination-link" aria-label="<span class='chapter-number'>7</span>&nbsp; <span class='chapter-title'>training</span>">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
