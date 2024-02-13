@@ -14,6 +14,7 @@ from finmetrika_ml.data.data_sampling import *
 from finmetrika_ml.utils import *
 from IPython.display import Markdown
 from torch.utils.data import DataLoader
+from datasets import load_dataset
 ```
 
 # Stratified random sampling {.unnumbered}
@@ -24,3 +25,22 @@ Sampling from a HuggingFace-like dataset:
 out = display(Markdown(generate_markdown_doc(stratified_sample_from_dataset)))
 ```
 
+For example, if we have a HuggingFace dataset `emotion`
+```{python}
+#| echo: false
+emotion = load_dataset("emotion", trust_remote_code=True)
+```
+
+```{python}
+emotion
+```
+
+Say we want to create a smaller sample of 1% of train data but using stratified sampling. We should define which split to sample from and the percentage of samples. Note that due to stratified nature of sampling and depending on how many label examples are present in each label group there can be a possibility that we sample (in count) less or more than what you would get as exact 1% of total dataset.
+```{python}
+emotion_sub = stratified_sample_from_dataset(
+                  data=emotion, 
+                  by_split='train', 
+                  random_seed=42, 
+                  perc_sample=0.01)
+emotion_sub
+```
