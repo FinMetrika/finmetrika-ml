@@ -62,6 +62,29 @@ def count_tokens(df:pd.DataFrame,
 
 
 
+def tokenize(data_sample:DatasetDict,
+             tokenizer:PreTrainedTokenizerBase,
+             text_column_name:str='text'):
+    """Tokenize text in the column 'text_column_name'. Note that prior to applying the function
+    the data_sample needs to be set to the 'torch' format by using data_sample.set_format('torch').
+
+    Args:
+        data_sample (DatasetDict): Dataset including input text.
+        tokenizer (PreTrainedTokenizerBase): The tokenizer corresponding to the model, used to identify model input names.
+        text_column_name (str): Name of the column which we wish to tokenize.
+
+    Returns:
+        input_ids, attention_mask: Tokenized text as input_ids and the corresponding attention masks if applicable.
+    """
+    return tokenizer(data_sample[text_column_name], 
+                     padding="max_length", 
+                     truncation=False, 
+                     add_special_tokens=True,
+                     return_tensors="pt")
+    
+
+
+
 def extract_feature_vector(data_sample:DatasetDict, 
                            model:PreTrainedModel, 
                            tokenizer:PreTrainedTokenizerBase,
@@ -86,6 +109,8 @@ def extract_feature_vector(data_sample:DatasetDict,
 
 
 
+    
+    
 
 class RegressionDataset1D(torch.utils.data.Dataset):
     
