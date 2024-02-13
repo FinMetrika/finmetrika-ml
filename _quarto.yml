@@ -47,6 +47,6 @@ format:
     colorlinks: true
   
 #execute: 
-#  freeze: auto
+freeze: auto
 title-block-banner: false
 title-block-style: default
