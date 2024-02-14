@@ -34,6 +34,17 @@ def get_labels(df:pd.DataFrame,
         
     return labels
 
+def get_labels_dataset(dts:DatasetDict,
+                       split:str,
+                       label_column_name:str):
+    """Get number of labels from the dataset.
+    
+    Args:
+        dts (DatasetDict): Dataset with at least one split.
+        split (str): Dataset sample, e.g. 'train'.
+        label_column_name (str): Name of the column where labels are stored in the dts.
+    """
+    return dts[split][label_column_name].num_classes
 
 
 def count_tokens(df:pd.DataFrame, 
@@ -75,6 +86,12 @@ def tokenize(data_sample:DatasetDict,
 
     Returns:
         input_ids, attention_mask: Tokenized text as input_ids and the corresponding attention masks if applicable.
+    
+    Examples:
+        my_dataset.set_format('torch')
+        my_dataset_enc = my_dataset.map(lambda batch: tokenize(batch, tokenizer, 'text'), 
+                                            batched=True, batch_size=None)
+
     """
     return tokenizer(data_sample[text_column_name], 
                      padding="max_length", 
@@ -82,7 +99,6 @@ def tokenize(data_sample:DatasetDict,
                      add_special_tokens=True,
                      return_tensors="pt")
     
-
 
 
 def extract_feature_vector(data_sample:DatasetDict, 
@@ -109,8 +125,28 @@ def extract_feature_vector(data_sample:DatasetDict,
 
 
 
+class TRXDataset(torch.utils.data.Dataset):
+    """Define the transaction dataset. Dataset should be of the form DatasetDict().
+    Dataset should be tokenized and include at least "input_ids" and "text" column names.
+
+    Args:
+        dataset_split (DatasetDict): Dataset including input text and input_ids (tokenized text).
+        device (str): Device on which to train the model. Use utils.check_device().
+    """
+    def __init__(self, dataset_split:DatasetDict,
+                 device:str):
+        self.dataset_split = dataset_split
+        self.device = device
     
+    def __getitem__(self, idx):
+        return {k: torch.tensor(self.dataset_split[idx][k]).to(self.device)\
+                    for k in self.dataset_split.features\
+                    if k in ['input_ids', 'attention_mask', 'label']}
     
+    def __len__(self):
+        return len(self.dataset_split)
+    
+
 
 class RegressionDataset1D(torch.utils.data.Dataset):
     
