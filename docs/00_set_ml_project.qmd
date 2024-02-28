@@ -39,3 +39,10 @@ class ProjectConfig:
  
 ```
 
+## Creating a Jupyter notebook from template
+
+You can easily create a Jupyter notebook from a template with the following command:
+```bash
+fm_create_nb NOTEBOOK-PATH/NOTEBOOK-NAME.ipynb
+```
+just replace `NOTEBOOK-PATH` with the path where you want the notebook to be created and `NOTEBOOK-NAME` with the desired name of your new notebook.
