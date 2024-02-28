@@ -21,11 +21,11 @@ To install use the `pip` command in your virtual environment:
 pip install finmetrika_ml
 ```
 
-## Create from templates
+## Create Jupyter notebook from templates
 
 To create a Jupyter notebook from template run the following command in terminal:
 ```bash
-fm_create_nb path/notebook_name.ipynb
+fm_create_nb NOTEBOOK-PATH/NOTEBOOK-NAME.ipynb
 ```
-and replace `path` with the path directory where you wish the notebook to be saved and `notebook_name` with your desired name choice.
+and replace `NOTEBOOK-PATH` with the path directory where you wish the notebook to be saved and `NOTEBOOK-NAME` with your desired name choice.
 
