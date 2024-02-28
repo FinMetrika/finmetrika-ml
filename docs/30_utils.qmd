@@ -67,6 +67,13 @@ display(Markdown(generate_markdown_doc(get_python_version)))
 display(Markdown(generate_markdown_doc(get_package_version)))
 ```
 
+## File system
+
+```{python}
+#| echo: false
+display(Markdown(generate_markdown_doc(check_path)))
+```
+
 ## Creating experiment information document {.unnumbered}
 
 ```{python}

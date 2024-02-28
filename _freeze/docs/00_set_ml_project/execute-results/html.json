@@ -1,0 +1,12 @@
+{
+  "hash": "2f6fa3f320414a7e4c7004726a954a7f",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Setting up the machine learning project\ntbl-colwidths:\n  - 25\n  - 10\n  - 10\n  - 45\n---\n\n\n\nAny data analysis and machine learning project requires lots of data exploration and experimentation with different model types along with different model arguments. Things can get pretty messy fast. To make life a bit easier it is best to organize at the start of the project by creating a new repository localy and/or in the cloud. This will ensure version control of your project.\n\nInevitably, there will be many arguments that we will need to use in the course of our experimentation. Best is to store them in the `config.py` file either as `ArgParse` or `dataclass` objects. Here is an example:\n\n```python\nfrom dataclasses import dataclass, asdict, field\nfrom pathlib import Path\n\n\n# Get the absolute path to the directory where config.py is located\nBASE_DIR = Path(__file__).resolve().parent.parent\n\n@dataclass\nclass ProjectConfig:\n    # Documenting experiments\n    experiment_version: str = field(\n        default=\"v0\",\n        metadata={'description': \"Name of the training experiment\"})\n    \n    experiment_description: str = field(\n        default=\"This is test run\",\n        metadata={'description': \"Describe the experiment in couple of sentences\"})\n \n```\n\n",
+    "supporting": [
+      "00_set_ml_project_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

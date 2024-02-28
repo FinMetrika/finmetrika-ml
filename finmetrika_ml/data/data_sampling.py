@@ -42,13 +42,17 @@ def stratified_sample_from_dataset(data:datasets.DatasetDict,
         train_idxC = df[~cond].copy().index.values.tolist()
         data_idxC = data[by_split].select(train_idxC)
         
-        return datasets.DatasetDict({
-            str(by_split): data_idx,
-            str(by_split)+'C': data_idxC,
-        })
-        
+        return data_idx, data_idxC
     else:
+        return data_idx
+    
+    #     return datasets.Dataset.from_dict({
+    #         str(by_split): data_idx,
+    #         str(by_split)+'C': data_idxC,
+    #     })
         
-        return datasets.DatasetDict({
-            str(by_split): data_idx
-        })
+    # else:
+        
+    #     return datasets.Dataset.from_dict({
+    #         str(by_split): data_idx
+    #     })

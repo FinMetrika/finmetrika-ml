@@ -34,7 +34,9 @@ def get_labels(df:pd.DataFrame,
         
     return labels
 
-def get_labels_dataset(dts:DatasetDict,
+
+
+def get_labels_from_dataset(dts:DatasetDict,
                        split:str,
                        label_column_name:str):
     """Get number of labels from the dataset.
@@ -44,7 +46,8 @@ def get_labels_dataset(dts:DatasetDict,
         split (str): Dataset sample, e.g. 'train'.
         label_column_name (str): Name of the column where labels are stored in the dts.
     """
-    return dts[split][label_column_name].num_classes
+    return dts[split].features[label_column_name].num_classes
+
 
 
 def count_tokens(df:pd.DataFrame, 

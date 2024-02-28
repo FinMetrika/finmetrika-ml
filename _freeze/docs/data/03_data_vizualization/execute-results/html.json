@@ -1,0 +1,12 @@
+{
+  "hash": "006e52bec80108b15687031e6bbd2ea4",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: data_vizualization\ntbl-colwidths:\n  - 25\n  - 10\n  - 10\n  - 45\n---\n\n\n\n# Categorical data {.unnumbered}\nPlot frequency of classes using the bar chart including labels.\n\n::: {#aa48e215 .cell execution_count=2}\n\n::: {.cell-output .cell-output-display .cell-output-markdown}\n### `plot_freq_classes` {.unnumbered}\n> plot_freq_classes(df: DataFrame, class_column: str, plot_no_classes: int, bar_color: str)\n\n*Create a horizontal bar plot of frequency classes.*\n\nArguments:\n\n|       | type    |default| description|\n|--------|--------|--------|--------|\n| **df** | DataFrame | None | Dataframe containing the class. |\n| **class_column** | str | None | Name of the column in df that contains the class label. |\n| **plot_no_classes** | int | None | Number of classes to plot. |\n| **bar_color** | str | #1f77b4 | Color of the bars as HEX value. |\n\n:::\n:::\n\n\n::: {#6cb2f443 .cell execution_count=3}\n\n::: {.cell-output .cell-output-display .cell-output-markdown}\n### `plot_tokens_per_class` {.unnumbered}\n> plot_tokens_per_class(df: DataFrame, class_column: str, tokens_cnt_column: str)\n\n*Plot a box-plot of the number of tokens per sequence. All classes are\nplotted in a decreasing order given by the median value.*\n\nArguments:\n\n|       | type    |default| description|\n|--------|--------|--------|--------|\n| **df** | DataFrame | None | Dataframe containing the class_column and tokens_cnt_column. |\n| **class_column** | str | None | Name of the column in df that contains the class label. |\n| **tokens_cnt_column** | str | None | Name of the column in df that contains the number of tokens per sequence. |\n\n:::\n:::\n\n\n",
+    "supporting": [
+      "03_data_vizualization_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

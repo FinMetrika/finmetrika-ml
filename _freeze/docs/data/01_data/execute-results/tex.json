@@ -1,0 +1,11 @@
+{
+  "hash": "2764381b99572f3ba5b2a5cf1806f854",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Data\ntbl-colwidths:\n  - 25\n  - 10\n  - 10\n  - 45\n---\n\n\n\nData module consists of:  \n-   `data_read.py`: loading the local txt or csv files  \n-   `create_datasets`: creating HuggingFace datasets from local files  \n-\n\n",
+    "supporting": [
+      "01_data_files/figure-pdf"
+    ],
+    "filters": []
+  }
+}

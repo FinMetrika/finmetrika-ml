@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import random
 import logging
 import inspect
@@ -6,7 +6,7 @@ import platform
 from datetime import datetime
 import torch
 import numpy as np
-
+from pathlib import Path
 
 
 def set_all_seeds(seed:int):
@@ -44,7 +44,21 @@ def get_package_version(package_name):
         return "Not Installed"
 
 
+def check_path(path:Path):
+    """Check whether the path exists and if not create directory.
 
+    Args:
+        path (Path): Full path location.
+    """
+    if not os.path.exists(path):
+        print(f'Creating path: {path}')
+        os.mkdir(path)
+    else:
+        print('Path exists!', 
+              f'{path}')
+    
+    
+    
 def update_config(FLAGS):
     """
     Update config arguments if any change was done via CLI when

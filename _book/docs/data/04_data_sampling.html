@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 3&nbsp; Data</title>
+<title>Machine learning for practical projects - 5&nbsp; data_sampling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../docs/data/02_data_processing.html" rel="next">
-<link href="../../docs/00_set_ml_project.html" rel="prev">
+<link href="../../docs/data/03_data_vizualization.html" rel="next">
+<link href="../../docs/data/02_data_processing.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/data/01_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/data/04_data_sampling.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -121,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></span></a>
   </div>
 </li>
@@ -133,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/data/04_data_sampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../../docs/data/04_data_sampling.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></span></a>
   </div>
 </li>
@@ -161,14 +195,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#stratified-random-sampling" id="toc-stratified-random-sampling" class="nav-link active" data-scroll-target="#stratified-random-sampling">Stratified random sampling</a>
+  <ul>
+  <li><a href="#stratified_sample_from_dataset" id="toc-stratified_sample_from_dataset" class="nav-link" data-scroll-target="#stratified_sample_from_dataset"><code>stratified_sample_from_dataset</code></a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">data_sampling</span></h1>
 </div>
 
 
@@ -185,12 +228,111 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data module consists of:<br>
-- <code>data_read.py</code>: loading the local txt or csv files<br>
-- <code>create_datasets</code>: creating HuggingFace datasets from local files<br>
--</p>
+<section id="stratified-random-sampling" class="level1 unnumbered">
+<h1 class="unnumbered">Stratified random sampling</h1>
+<p>Sampling from a HuggingFace-like dataset:</p>
+<div id="10fd71ae" class="cell" data-execution_count="2">
+<section id="stratified_sample_from_dataset" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="stratified_sample_from_dataset"><code>stratified_sample_from_dataset</code></h3>
+<blockquote class="blockquote">
+<p>stratified_sample_from_dataset(data: DatasetDict, by_split: str, random_seed: int, perc_sample: float, return_complement_sample: bool)</p>
+</blockquote>
+<p><em>Stratified sampling without replacement. Sample a percentage of a dataset given the dataset split. If ‘return_complement_sample’ is set to True then the function returns the complement sample as well.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>data</strong></td>
+<td>DatasetDict</td>
+<td>None</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>by_split</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Which data subset based on split should we sample from. Example: ‘train’.</td>
+</tr>
+<tr class="odd">
+<td><strong>random_seed</strong></td>
+<td>int</td>
+<td>None</td>
+<td>Project arguments.</td>
+</tr>
+<tr class="even">
+<td><strong>perc_sample</strong></td>
+<td>float</td>
+<td>None</td>
+<td>percentage of samples to obtain</td>
+</tr>
+<tr class="odd">
+<td><strong>return_complement_sample</strong></td>
+<td>bool</td>
+<td>True</td>
+<td>Save the compleent sample as well.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<p>For example, if we have a HuggingFace dataset <code>emotion</code></p>
+<div id="b6b6be0d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>emotion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>DatasetDict({
+    train: Dataset({
+        features: ['text', 'label'],
+        num_rows: 16000
+    })
+    validation: Dataset({
+        features: ['text', 'label'],
+        num_rows: 2000
+    })
+    test: Dataset({
+        features: ['text', 'label'],
+        num_rows: 2000
+    })
+})</code></pre>
+</div>
+</div>
+<p>Say we want to create a smaller sample of 1% of train data but using stratified sampling. We should define which split to sample from and the percentage of samples. Note that due to stratified nature of sampling and depending on how many label examples are present in each label group there can be a possibility that we sample (in count) less or more than what you would get as exact 1% of total dataset.</p>
+<div id="115d726d" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>emotion_sub <span class="op">=</span> stratified_sample_from_dataset(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  data<span class="op">=</span>emotion, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                  by_split<span class="op">=</span><span class="st">'train'</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  random_seed<span class="op">=</span><span class="dv">42</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  perc_sample<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>emotion_sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>DatasetDict({
+    train: Dataset({
+        features: ['text', 'label'],
+        num_rows: 161
+    })
+    trainC: Dataset({
+        features: ['text', 'label'],
+        num_rows: 15839
+    })
+})</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -582,13 +724,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../docs/00_set_ml_project.html" class="pagination-link  aria-label=" &lt;span="" up="" the="" machine="" learning="" project&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Setting up the machine learning project</span></span>
+      <a href="../../docs/data/02_data_processing.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">data_processing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../docs/data/02_data_processing.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>data_processing</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">data_processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../docs/data/03_data_vizualization.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>data_vizualization</span>">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

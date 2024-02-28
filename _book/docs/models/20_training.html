@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine learning for practical projects - 3&nbsp; Data</title>
+<title>Machine learning for practical projects - 7&nbsp; training</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../docs/data/02_data_processing.html" rel="next">
-<link href="../../docs/00_set_ml_project.html" rel="prev">
+<link href="../../docs/30_utils.html" rel="next">
+<link href="../../docs/data/03_data_vizualization.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/data/01_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/models/20_training.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -121,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../docs/data/01_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></span></a>
   </div>
 </li>
@@ -145,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/models/20_training.html" class="sidebar-item-text sidebar-link">
+  <a href="../../docs/models/20_training.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></span></a>
   </div>
 </li>
@@ -161,14 +195,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#training" id="toc-training" class="nav-link active" data-scroll-target="#training">Training</a>
+  <ul>
+  <li><a href="#trainnn" id="toc-trainnn" class="nav-link" data-scroll-target="#trainnn"><code>TrainNN</code></a></li>
+  </ul></li>
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning">Fine tuning</a>
+  <ul>
+  <li><a href="#feature-extraction" id="toc-feature-extraction" class="nav-link" data-scroll-target="#feature-extraction">Feature extraction</a>
+  <ul class="collapse">
+  <li><a href="#finetuneftsextraction" id="toc-finetuneftsextraction" class="nav-link" data-scroll-target="#finetuneftsextraction"><code>FineTuneFtsExtraction</code></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#describing-the-model-architecture" id="toc-describing-the-model-architecture" class="nav-link" data-scroll-target="#describing-the-model-architecture">Describing the model architecture</a>
+  <ul>
+  <li><a href="#model_size" id="toc-model_size" class="nav-link" data-scroll-target="#model_size"><code>model_size</code></a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">training</span></h1>
 </div>
 
 
@@ -185,12 +239,211 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data module consists of:<br>
-- <code>data_read.py</code>: loading the local txt or csv files<br>
-- <code>create_datasets</code>: creating HuggingFace datasets from local files<br>
--</p>
+<section id="training" class="level1 unnumbered">
+<h1 class="unnumbered">Training</h1>
+<div id="a5f0b8c7" class="cell" data-execution_count="2">
+<section id="trainnn" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="trainnn"><code>TrainNN</code></h3>
+<blockquote class="blockquote">
+<p>TrainNN(model: _empty, training_dataloader: DataLoader, loss_fn: str, optimizer: _empty, num_epochs: int, device: str)</p>
+</blockquote>
+<p><em>Train a neural network.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>model</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Instantiated model class or a defined model architecture.</td>
+</tr>
+<tr class="even">
+<td><strong>training_dataloader</strong></td>
+<td>DataLoader</td>
+<td>None</td>
+<td>Dataloader for training.</td>
+</tr>
+<tr class="odd">
+<td><strong>loss_fn</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Loss function</td>
+</tr>
+<tr class="even">
+<td><strong>optimizer</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>optimizer</td>
+</tr>
+<tr class="odd">
+<td><strong>num_epochs</strong></td>
+<td>int</td>
+<td>None</td>
+<td>Number of epochs to train.</td>
+</tr>
+<tr class="even">
+<td><strong>device</strong></td>
+<td>str</td>
+<td>None</td>
+<td>Device on which to train the model. Use utils.check_device().</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<p>Let’s see a simple example of randomly generated data:</p>
+<div id="6609b37d" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">20</span>, num<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">+</span> np.cos(X)<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> np.random.normal(size<span class="op">=</span>X.shape)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataset &amp; dataloader</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dataset_reg <span class="op">=</span> RegressionDataset1D(X,y)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>training_dataloader <span class="op">=</span> DataLoader(dataset_reg, shuffle <span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d7a01eb1" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="20_training_files/figure-html/cell-5-output-1.png" width="566" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s fit a simple 2 layer linear model with a <code>tanh</code> activation function:</p>
+<div id="9e0d168b" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">1</span>, <span class="dv">10</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nn.Tanh(),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">10</span>, <span class="dv">1</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> TrainNN(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>model,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    training_dataloader<span class="op">=</span>training_dataloader,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    loss_fn<span class="op">=</span>nn.MSELoss(),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    num_epochs<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    device<span class="op">=</span>check_device()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># train the model</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Training ... '</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>train.train()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using mps device!
+Training ... </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  0%|          | 0/20 [00:00&lt;?, ?it/s]100%|██████████| 20/20 [00:00&lt;00:00, 250406.21it/s]</code></pre>
+</div>
+</div>
+</section>
+<section id="fine-tuning" class="level1 unnumbered">
+<h1 class="unnumbered">Fine tuning</h1>
+<section id="feature-extraction" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="feature-extraction">Feature extraction</h2>
+<div id="b6fe22f6" class="cell" data-execution_count="6">
+<section id="finetuneftsextraction" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="finetuneftsextraction"><code>FineTuneFtsExtraction</code></h3>
+<blockquote class="blockquote">
+<p>FineTuneFtsExtraction(model_name_hf: _empty, dataset_hf: DatasetDict, use_hf: bool)</p>
+</blockquote>
+<p><em>Fine tune a model using feature extraction. Training is done on the hidden states as features, without modifying the pretrained model.</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>model_name_hf</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Model name as shown on HuggingFace</td>
+</tr>
+<tr class="even">
+<td><strong>dataset_hf</strong></td>
+<td>DatasetDict</td>
+<td>None</td>
+<td>Dataset dictionary with minimal splits:</td>
+</tr>
+<tr class="odd">
+<td><strong>use_hf</strong></td>
+<td>bool</td>
+<td>True</td>
+<td>Use transformers library for training.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</section>
+</section>
+<section id="describing-the-model-architecture" class="level1 unnumbered">
+<h1 class="unnumbered">Describing the model architecture</h1>
+<div id="e8a06b17" class="cell" data-execution_count="7">
+<section id="model_size" class="level3 unnumbered cell-output cell-output-display cell-output-markdown">
+<h3 class="unnumbered anchored" data-anchor-id="model_size"><code>model_size</code></h3>
+<blockquote class="blockquote">
+<p>model_size(model: _empty)</p>
+</blockquote>
+<p><em>Count the number of parameters in the model</em></p>
+<p>Arguments:</p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>model</strong></td>
+<td>_empty</td>
+<td>None</td>
+<td>Instantiated model class.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -582,13 +835,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../docs/00_set_ml_project.html" class="pagination-link  aria-label=" &lt;span="" up="" the="" machine="" learning="" project&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Setting up the machine learning project</span></span>
+      <a href="../../docs/data/03_data_vizualization.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">data_vizualization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../docs/data/02_data_processing.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>data_processing</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">data_processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../docs/30_utils.html" class="pagination-link" aria-label="<span class='chapter-number'>8</span>&nbsp; <span class='chapter-title'>utils</span>">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">utils</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
