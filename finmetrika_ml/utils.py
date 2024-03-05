@@ -7,6 +7,8 @@ from datetime import datetime
 import torch
 import numpy as np
 from pathlib import Path
+from functools import reduce
+
 
 
 def set_all_seeds(seed:int):
@@ -229,3 +231,17 @@ def generate_markdown_doc(func):
     
     return markdown_output
 
+
+def apply_functions(functions:list, data):
+    """Apply a series of data transformations. The reduce function takes the first function from functions list 
+    and applies it to data, producing a new result. This new result is then used as the input (x) for the next 
+    function in functions. This process repeats for each function in the list, with each step producing a new 
+    result that's passed to the next function.
+
+    Args:
+        functions (list): A list (or any iterable) of functions to apply to the data. 
+            Each function in this list is expected to take a single argument (the data) and return a result. 
+        data (_type_): Input data to apply the function.
+    """
+    
+    return reduce(lambda x, func: func(x), functions, data)
