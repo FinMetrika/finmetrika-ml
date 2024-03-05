@@ -52,7 +52,7 @@ def get_labels_from_dataset(dts:DatasetDict,
 
 def count_tokens(df:pd.DataFrame, 
                  col_input_ids:str="input_ids", 
-                 col_attn_mask:str=None):
+                 col_attn_mask:str="attention_mask"):
     """Counts the number of tokens in each row of a DataFrame where the 
     attention mask is 1.
 
@@ -65,7 +65,7 @@ def count_tokens(df:pd.DataFrame,
         pd.Series with the count of tokens for each row.
     
     Examples:
-        df_train['cnt_tokens'] = count_tokens_in_dataframe(df_train)
+        df_train['cnt_tokens'] = count_tokens(df_train)
     """
     
     def count_tokens(row):
@@ -78,10 +78,13 @@ def count_tokens(df:pd.DataFrame,
 
 def tokenize(data_sample:DatasetDict,
              tokenizer:PreTrainedTokenizerBase,
-             text_column_name:str='text'):
+             padding:str="max_length",
+             text_column_name:str='text',
+             truncation:bool=False,
+             max_length:int=None):
     """Tokenize text in the column 'text_column_name'. Note that prior to applying the function
     the data_sample needs to be set to the 'torch' format by using data_sample.set_format('torch').
-
+    TODO Update docstring
     Args:
         data_sample (DatasetDict): Dataset including input text.
         tokenizer (PreTrainedTokenizerBase): The tokenizer corresponding to the model, used to identify model input names.
@@ -97,8 +100,9 @@ def tokenize(data_sample:DatasetDict,
 
     """
     return tokenizer(data_sample[text_column_name], 
-                     padding="max_length", 
-                     truncation=False, 
+                     padding=padding, 
+                     truncation=truncation,
+                     max_length = max_length,
                      add_special_tokens=True,
                      return_tensors="pt")
     
