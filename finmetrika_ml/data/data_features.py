@@ -9,8 +9,8 @@ def create_datetime_features(df:pd.DataFrame,
     - week in a year
 
     Args:
-        df (pd.DataFrame): _description_
-        datetime_column (str): _description_
+        df (pd.DataFrame): Dataframe containing the transaction dates.
+        datetime_column (str): Column in the dataframe containing date.
     """
     
     # date in format Name of the Month Day Year
@@ -29,3 +29,19 @@ def create_datetime_features(df:pd.DataFrame,
     df['DT_WEEK_OF_YEAR'] = df[datetime_column].dt.isocalendar().week
     
     return df
+
+
+
+def quantize_amount(df:pd.DataFrame,
+                    txt_amount_column:str):
+    """_summary_
+
+    Args:
+        df (pd.DataFrame): Dataframe containing the transaction amounts.
+        txt_amount_column (str): Column in the dataframe containing the transaction amounts.
+    """
+    
+    df['TRX_AMOUNT_BIN'] = pd.cut(df['TRX_AMOUNT'], 
+                                        bins=[0, 50, 500, 1000, float('inf')],
+                                        labels=['low', 'medium', 'high', 'luxury'],
+                                        right=False)
