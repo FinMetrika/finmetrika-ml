@@ -11,18 +11,21 @@ patterns_dict = {
     # pattern: 462765XXXXXX1234
     "credit_card_no" : r'(\d{6}X+\d{4})',
     
-    "repeated_words" : r'\b(\w+)(\s+\1\b)+',
+    # pattern for matching repeated words (case-insensitive)
+    #"repeated_words" : r'\b(\w+)(\s+\1\b)+',
     
     "abbreviations"  : [r" d.d.", " D.O.O.", " d.o.o.", "DOO", "doo", r"\.DE", "\\.de", "\\.COM", "\\.com",
-                        "S.R.L", "\\.NET", "\\.co", "D.O", "\\*", "WWW", r"\.", r"\:", r"\'"],
+                        "S.R.L", "\\.NET", "\\.co", "D.O", "\\*", "WWW", r'\.EU'],
+    
+    "punctuation"    : [r"\.", r"\:", r"\'"],
     
     "non_ascii_chr"  : r'[^ -~]',
     
     # Match 'PBZ' at the start of the string
     "cro_abrv"       : [r"^PBZT",   # 'PBZT'
                         r"^PBZ\d",  # 'PBZ followed by a digit
-                        r"^TN\d+",  # 'TN' followed by any number of digits
-                        ],
+                        r"TN\d+",  # 'TN' followed by any number of digits
+                        r"T\d+\s"],  # 'T' followed by any number of digits
     
     # Match P-0980, P-1234 for different branch of the store
     "branch-no"      : r"P-\d{4}",
@@ -33,6 +36,12 @@ patterns_dict = {
     'atm_no'         : r"(ATM\s)[A-Za-z]?\d+\s",
     
     #TODO Extract and remove address and city form transaction
+    #TODO IBAN info: "Prijenos sa HR1234 TEA "
+    
+    # Remove sa HR1234... 
+    'iban'           : r"sa HR\d+\s"
+    #TODO Should we also remove 'Prijenos ' from text
+    #TODO What about 'Prijenos sa 12345678 Naplata s avista racuna NAME'
 }
 
 
@@ -53,19 +62,28 @@ def remove_ccard(text:str) -> str:
 
 
 def remove_repeated_words(text:str):
-    """Replace matched repeated words with a single instance of the word.
+    """Iteratively check for repeated words in the text. Remove all repeated word
+    instances.
 
     Args:
         text (str): Input text.
 
     Returns:
-        str: Input text with removed repeated words
+        str: Input text with removed repeated words.
     """
-    # Pattern to match word boundaries followed by one or more non-whitespace
-    # characters, followed by any number of whitespace, followed by the same word again
-    pattern = patterns_dict["repeated_words"]
     
-    return re.sub(pattern, r'\1', text, flags=re.IGNORECASE)
+    seen = set()    # Keep track of already seen words
+    result = []     # Keep the final sequence of non-repeating words
+    
+    # Split text into words
+    for word in text.split():
+        # Check is already seen (use lowercase to not have an issue with casing)
+        if word.lower() not in seen:
+            seen.add(word.lower())  # Add the lowercase version of the word to seen
+            result.append(word)     # Add the original word
+    
+    return ' '.join(result)
+    #return re.sub(pattern, r'\1', text, flags=re.IGNORECASE)
 
 
 
@@ -105,7 +123,7 @@ def remove_abrv_chr(text:str
 
     modified_text = text
     for p in patterns_list:
-        modified_text = re.sub(p, '', modified_text) if isinstance(modified_text, str) else modified_text
+        modified_text = re.sub(p, '', modified_text) #if isinstance(modified_text, str) else modified_text
         
     return modified_text.strip()
 
@@ -174,3 +192,38 @@ def remove_atm_no(text:str) -> str:
     pattern = patterns_dict["atm_no"]
     # \1 refers to the first captured group (ATM and any spaces after it)
     return re.sub(pattern, r'\1', text)
+
+
+def remove_iban(text:str) -> str:
+    """Remove "sa HR1234..." from text.
+
+    Args:
+        text (str): Input text.
+    
+    Returns:
+        str: Input text with removed IBAN numbers.
+    """
+    
+    pattern = patterns_dict["iban"]
+    
+    return re.sub(pattern, '', text)
+
+
+
+def remove_punctuation(text:str) -> str:
+    """Remove any strain punctuation.
+
+    Args:
+        text (str): Input text.
+
+    Returns:
+        str: Input text without specified punctuations.
+    """
+    pattern = patterns_dict["punctuation"]
+    
+    modified_text = text
+    for p in pattern:
+        modified_text = re.sub(p, '', modified_text)
+    
+    return modified_text
+
