@@ -243,5 +243,13 @@ def apply_functions(functions:list, data):
             Each function in this list is expected to take a single argument (the data) and return a result. 
         data (_type_): Input data to apply the function.
     """
+    #TODO Fix the function to take on arguments other than text like additional patterns
+    
+    # def apply_func(x, func_and_args):
+    #     func, args_kwargs = func_and_args
+    #     args = args_kwargs.get('args', ())
+    #     kwargs = args_kwargs.get('kwargs', {})
+    #     return func(x, *args, **kwargs)
     
     return reduce(lambda x, func: func(x), functions, data)
+    #return reduce(apply_func, functions, data)
