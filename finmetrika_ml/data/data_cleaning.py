@@ -17,15 +17,20 @@ patterns_dict = {
     "abbreviations"  : [r" d.d.", " D.O.O.", " d.o.o.", "DOO", "doo", r"\.DE", "\\.de", "\\.COM", "\\.com",
                         "S.R.L", "\\.NET", "\\.co", "D.O", "\\*", "WWW", r'\.EU'],
     
-    "punctuation"    : [r"\.", r"\:", r"\'"],
+    "punctuation"    : [r"\.", r"\:", r"\'",
+                        r"^\s*,\s",   # Remove the first comma (and any leading whitespace)
+                        r",\s*$",   # Remove the last comma (and any trailing whitespace)
+                        ],
     
     "non_ascii_chr"  : r'[^ -~]',
     
     # Match 'PBZ' at the start of the string
     "cro_abrv"       : [r"^PBZT",   # 'PBZT'
                         r"^PBZ\d",  # 'PBZ followed by a digit
-                        r"TN\d+",  # 'TN' followed by any number of digits
-                        r"T\d+\s"],  # 'T' followed by any number of digits
+                        r"TN\d+",   # 'TN' followed by any number of digits (Konzum)
+                        r"T\d+\s",  # 'T' followed by any number of digits
+                        r"P-\d+\s", # 'P-' followed by any number of digits and space (Tommy)
+                        ],
     
     # Match P-0980, P-1234 for different branch of the store
     "branch-no"      : r"P-\d{4}",
@@ -84,23 +89,6 @@ def remove_repeated_words(text:str):
     
     return ' '.join(result)
     #return re.sub(pattern, r'\1', text, flags=re.IGNORECASE)
-
-
-
-def remove_commas_and_extra_spaces(text:str):
-    """Remove any comma within the text. 
-       Remove any extra white spaces within and at the edges of text.
-
-    Args:
-        text (str): Text to apply the function.
-    """
-    # Remove commas
-    text_no_commas = text.replace(",","")
-    
-    # Remove extra spaces
-    text_single_space = re.sub(" +", " ", text_no_commas)
-
-    return text_single_space.strip()
 
 
 
