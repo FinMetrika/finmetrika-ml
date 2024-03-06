@@ -1,4 +1,24 @@
+import re
 import pandas as pd
+import numpy as np
+
+
+patterns_dict = {
+    # pattern: 462765XXXXXX1234
+    "credit_card_no" : r'(\d{6}X+\d{4})',
+    
+    # Online shopping
+    #TODO Check if there is already
+    "online_purchase" : [r'\.COM', r'\com.']
+    
+    #TODO Detect location of the store. Test with LLM to extract address.
+    
+    #TODO Extract for which month the bills are paid 11/23
+    #TODO How far off it is from the current month
+    
+}
+
+
 
 def create_datetime_features(df:pd.DataFrame,
                               datetime_column:str):
@@ -45,3 +65,23 @@ def quantize_amount(df:pd.DataFrame,
                                         bins=[0, 50, 500, 1000, float('inf')],
                                         labels=['low', 'medium', 'high', 'luxury'],
                                         right=False)
+
+
+
+def extract_ccard(text:str) -> str:
+    """Extract credit card number from text. The credit card number of partially masked, like so:
+    '462765XXXXXX1234'.
+
+    Args:
+        text (str): Input text.
+    
+    Returns:
+        str: The extracted credit card number or an empty string if no match is found.
+    """
+    pattern = patterns_dict["credit_card_no"]
+    
+    match = re.search(pattern, text)
+    if match:
+        return match.group()
+    else:
+        return np.nan
