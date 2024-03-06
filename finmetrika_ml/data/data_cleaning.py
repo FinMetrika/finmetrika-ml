@@ -14,7 +14,7 @@ patterns_dict = {
     # pattern for matching repeated words (case-insensitive)
     #"repeated_words" : r'\b(\w+)(\s+\1\b)+',
     
-    "abbreviations"  : [r" d.d.", " D.O.O.", " d.o.o.", "DOO", "doo", r"\.DE", "\\.de", "\\.COM", "\\.com",
+    "abbreviations"  : [r" d.d.", " DD", " D.O.O.", " d.o.o.", "DOO", "doo", r"\.DE", "\\.de", "\\.COM", "\\.com",
                         "S.R.L", "\\.NET", "\\.co", "D.O", "\\*", "WWW", r'\.EU'],
     
     "punctuation"    : [r"\.", r"\:", r"\'",
@@ -25,8 +25,8 @@ patterns_dict = {
     "non_ascii_chr"  : r'[^ -~]',
     
     # Match 'PBZ' at the start of the string
-    "cro_abrv"       : [r"^PBZT",   # 'PBZT'
-                        r"^PBZ\d",  # 'PBZ followed by a digit
+    "cro_abrv"       : [r"PBZT",   # 'PBZT'
+                        r"PBZ\d",  # 'PBZ followed by a digit
                         r"TN\d+",   # 'TN' followed by any number of digits (Konzum)
                         r"T\d+\s",  # 'T' followed by any number of digits
                         r"P-\d+\s", # 'P-' followed by any number of digits and space (Tommy)
