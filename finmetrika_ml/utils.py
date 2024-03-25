@@ -93,7 +93,10 @@ def check_device(verbose:bool=True):
     if torch.backends.mps.is_available():
         device = "mps"
     elif torch.cuda.is_available():
-        device = "cuda"
+        device = torch.device("cuda")
+        if verbose:
+            print(f'There are {torch.cuda.device_count()} GPU(s) available!')
+            print(f'GPU type: {torch.cuda.get_device_name(device)}')
     else:
         device = "cpu"
     
