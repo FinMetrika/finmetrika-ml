@@ -115,3 +115,4 @@ def model_size(model):
         model: Instantiated model class.
     """    
     return sum(t.numel() for t in model.parameters())
+

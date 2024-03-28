@@ -154,6 +154,27 @@ class TRXDataset(torch.utils.data.Dataset):
         return len(self.dataset_split)
     
 
+class CausalLMDataset(torch.utils.data.Dataset):
+    
+    def __init__(self, encodings, device):
+        self.encodings = encodings
+        self.device = device
+        
+    def __len__(self):
+        return len(self.encodings['input_ids'])
+    
+    def __getitem__(self, idx):
+        item = {
+           key : val[idx] for key,val in self.encodings.items()\
+               if key in ['input_ids', 'attention_mask', 'label'] 
+        }
+        
+        # Labels are the same as input_ids for CLM        
+        item['labels'] = item['input_ids']
+        
+        return item
+           
+    
 
 class RegressionDataset1D(torch.utils.data.Dataset):
     
